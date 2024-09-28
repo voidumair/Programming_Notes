@@ -1,0 +1,55 @@
+-----------Production Constraints---------
+BACKEND
+    - port must be given from environmental variable
+    - when using 
+        import something from "somewhere"
+      always make
+        "type": "module",
+      in package.json
+
+CORS
+    - cross origin resource sharing
+    - doosray ko apne gar mai enter ni hone dena
+    - same origins (no issue)
+      url port must be same 
+    - cross origins
+      different url, different port
+    - solutions
+      - white list the frontend url (ip and port) in backend
+      - white list the domain in backend
+    - solution methods
+      - cors npm package
+      in package.json
+
+PROXIES
+    - alternate of CORS. Server will consider that request is coming from same origin.
+    - add proxy of the url (ip and port)
+    - in backend app.js:
+    - npm i cors 
+          const cors = require('cors');
+          app.use(cors());
+          app.use(express.json());
+    - in vite:
+      - inside vite.config.js:
+          import { defineConfig } from 'vite';
+          import react from '@vitejs/plugin-react';
+          export default defineConfig({
+            plugins: [react()],
+            server: {
+              proxy: {
+                '/api': {
+                  target: 'http://localhost:3000',
+                  changeOrigin: true,
+                  rewrite: (path) => path.replace(/^\/api/, ''),
+                },
+              },
+            },
+          });
+
+    - this will append http://localhost:3000 before /api
+    - eg: axios.get('/api/product') --> http://localhost:3000/api/product
+
+FRONTEND
+    - using PROXIES
+        axios.get('/api/product')
+        

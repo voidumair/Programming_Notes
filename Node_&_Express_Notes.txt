@@ -1,0 +1,116 @@
+<------ NODE & EXPRESS ------>
+------ Learn What Matters ------
+	1. Express or Node what is the main lead
+			-> both are main roles but express cannot be run without Node.
+			-> Node needs express to handle requests and responses and routes.
+
+	2. What is express
+			-> Node gives HTTP to make server but its code is diffcult.
+			-> Express also makes server but its easier to handle.
+			-> BTS Express also uses HTTP.
+
+
+	3. What is Routing
+			-> routes are url after /
+			-> /contact is a route
+			-> coding routes is routing
+
+	4. request, response, next
+			-> req: request mai user ka data hota hai (user location, device info etc...)
+			-> res: response mai controls hote hain jinki basis pr hm server se response bej patay hain
+			-> next: next is a push so that our request moves to next thing which should be executed
+
+	5. Route Parameters
+			-> /:slug
+			-> to make route dynamic you can use : at place where you want to make it dynamic and to access there value use ${req.params.slug}
+
+	6. Template Engines
+			-> ye style of markup se convert kr k HTML dete hain
+			-> ejs, pug, handlebars
+			-> using ejs 
+					> npm i ejs
+					> app.set("view engine","ejs");
+					> make a folder named "views"
+					> make .ejs file inside views
+					> write res.render("./views/index.ejs") => render krte waqat makesure to use files in views folder and remove ./views and .ejs just res.render("index")
+
+	7. Static Files
+			-> images, stylesheets, frontend javascripts
+			-> Setting up static files
+					> make a folder named "public"
+					> create 3 folders inside it "images , stylesheets, javascripts(frontend js)"
+					> app.use(express.static("public)); in backend file
+					> res.send("../public/stylesheets/style.css") => remove public res.send("../stylesheets/style.css") => "../" is same as "/" => res.send("/stylesheets/style.css")
+					> we can also use static files in ejs file by linking them
+
+	8. error handling
+			-> try-catch and other considerations
+			
+------ Master The Art ------
+	1. Express Genrator
+		-> it will make the folder structure for you and it will also write the basic code for the project.
+		-> it creates a folder and do everything inside that. we dont need to make main folder.
+		-> Steps to use express genrator
+			-> Install Globally (npm i express-generator -g)
+			-> (express [appname] --view=ejs)
+			-> (cd [appname])
+			-> (npm i)
+			-> open in VS Code
+			-> Changes:
+				-> app.get => router.get
+				-> nodemon filename.js => nodemon
+
+	2. MongoDB
+		<Code Side>        ---         <MongoDB Side>
+			DB Setup                     DB Formation
+			Model                        Collection
+			Schema                       Documents
+		
+			-> Install MongoDB
+			-> Install mongoose
+			-> import and setup connection
+			-> make schema
+			-> create model and export (practiced in users.js in views folder)
+
+	2. Cookies and Sessions
+		<Client (user's browser)>        ---         <Server>
+			Cookies                                 Session
+			-> both are used to save user's data
+			-> Cookie : 
+					Saves data on clients browser (cookie-parser) (handled using req and res (res to send data to user's browser. req to recieve data from user ) )
+			-> Session : 
+					Saves data on server (express-session) (handled using req cz user ki traf se anay wala data req mai hota hai)
+			-> if server restarts session deletes.
+			-> session value set in one route can accesed in any route (practiced in app.js)
+
+------ The End Game ------
+	1. Flash Messages
+		-> Flash ka mtlab hai srever k kisi route p data bnana aur uss data ko kisi aur route mai use kr pana
+			-> install connect-flash
+			-> put connect-flash in app.use()
+			-> kisi b route main flash create kren
+			-> kisi b doosre route pr app.use() chalany ka try kren
+			-> NOTE: YOU CAN'T USE CONNECT-FLASH WITHOUT EXPRESS-SESSION
+
+	2. Mongoose intermediate
+		-> case insenstive search
+			-> RegExp("name","flags") [^start $end]
+		-> find data in which array contains all of a set of values
+			-> {FeildData:{$all:[1,3]}}
+		-> find data in which array contains all of a set of values
+			-> {FeildData:{$all:[1,3]}}
+		-> Search between date range
+			-> {"dateCreated":{$gte:date2,$lte:date1}}
+		-> Search if field exists
+			-> {"dateCreated":{$exists:true}}
+		-> specific field length
+			-> see in (user.js)
+
+	2. Authentication and Authorization
+		-> Steps to follow:
+				-> install these packages:
+					-> npm i express-session mongoose passport passport-local passport-local-mongoose
+				-> write app.js code first (write it after view engine and before logger)
+				-> setup users.js properly
+				-> in index.js try register first and then other codes as well
+			

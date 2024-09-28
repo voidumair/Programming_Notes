@@ -1,0 +1,110 @@
+Lec# 02
+->  Stages
+      U - Untracked
+      A - Added or Staged
+      C - Commited
+
+->  git status -s 
+      to know the status of unstaged and staged files
+->  git log --oneline 
+      to know current status of saved points
+
+->  Making CheckPoint or Saved Point
+      adding files
+      staging files
+      commiting files
+      commiting file is actually makiing a checkpoint of file. New commit is new checkpoint
+
+->  .gitignore
+      to ignore files from tracking
+
+->  Going back to some previous saved point
+      git reset --hard(hr jaga se peechla commit hata du)
+      git reset --hard HEAD~1(1 step peeche)
+      git reset --hard HEAD~2(2 step peeche)
+      optionts
+            soft
+            hard
+            mixed
+
+Summery
+      git ko enable krna - git init
+      git k sath files add krna - staging
+      saved point / check point create krna - git commit
+      kisi previous checkpoint pr wapis jana - git reset
+
+Lec# 03
+      STATUS AND LOGS
+            -> git status -s : checking konsi file kis stage mai ha. it tells changes in file(file stages) before commit and after commit
+                  ?? OR U - Untracked
+                  A -  Added
+                  AM - Added but Modified
+                  NOTE: git status sirf un files ka status btaye ga jo Commited nahi hain ya commit hone k baad modify howee hain
+                  M - commit krne k baad modified
+
+            -> git log --oneline OR --graph: checking kitne saved checkpoints hain. it tells all commit histories
+      MAKING POSSIBILTIES
+      BRANCHING 
+            -> git branch branchName : to create new branch
+            -> git branch : see list of all branches
+            -> git switch branchName : switch to another branch
+            -> git switch -C newBranch : create newBranch and switch to it
+            -> How to merge 2 branches:
+                  -> you need to be in main branch(git switch main)
+                  -> git merge branchName
+                  ->    Problem1: you added 2nd line in branch and also 2nd in main(conflict happens)
+                  ->    Solution: accept current changes | accept incoming changes | accept both
+                  -> 03 way merge : a senario where we are merging 2 branches while accpeting both changes(main branch --> merged with(changes in main branch+changes in other branch)) WE HAVE TO MAKE A NEW COMMIT
+                  -> Fast Forward merge : (Location of HEAD changes from main to changes in another branch)
+            -> How to delete branch:
+                  -> git branch -d branchName
+            -> Stashing:
+                  -> git stash : makes draft of changes in one branch
+                  -> now you can switch to another branch. after coming back to that branch
+                  -> git stash apply : to get back your changes
+                  -> git stash clear : to clear data in stash
+
+Lec# 04
+      COLLABORATION
+             -> Important points
+                  -> Main bnda Folder aur Initial Files bnaye ga
+                  -> Ab uss Folder ko Github pr daal de ga
+                  -> Ab Collaborators ko add kr ga
+
+                  -> Ab Saray bnday us repo se cloning kren gai
+                  -> VERY IMP: Apni branch create kren aur apna code usi branch mai likhen
+                  -> Code complete hone pr commit kr den and push kr den
+                  -> Inform kren Main bnday ko about commit
+                  -> Main bnda fetch kre ga, code main branch mai merge kre ga, aur re-push kre ga
+             -> Commands
+                  -> Main Banda
+                        -> git init
+                        -> git add . (Add all files)
+                        -> git commit -m "Intial Commit"
+                        -> git remote add origin https://githubRepoLink (Link to github Repo)
+                        -> git push -u origin master (push code from main to origin)
+                  -> Collaborator
+                        -> git clone link (clone the repo)
+                        -> git switch -C newBranch (create new branch)
+                        -> write your code
+                        -> git add .
+                        -> git commit -m "Added new Features"
+                        -> git branch (should be in new branch)
+                        -> git push -u origin newBranch (push code from newBranch to origin)
+                  -> Main Banda
+                        -> git fetch
+                        -> git switch newBranch
+                        -> git switch master
+                        -> git merge newBranch
+                        -> git push -u origin master
+                  -> Collaborator
+                        Collaborator has to fetch the new code and merge
+                        -> git switch master
+                        -> git pull (code will b fetch and merge the code as well)
+                        
+
+
+
+
+
+            

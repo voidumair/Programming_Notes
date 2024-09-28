@@ -1,0 +1,325 @@
+****************<<<<REACT NOTES by UMAIR SARWAR>>>>****************
+what: -JS library to maintain frontend(MVC)
+        by default Browser webpage mai kuch change hone pr poora DOM tree refresh krta hai
+        REACT directly DOM tree update ni hone deti
+        it has its own Virtual DOM jo k exact copy hai DOM ki but has one difference
+        virtual DOM main koi b element change hoga tu sirf uss element ko change kiya jaye na k pooray DOM ko 	refresh kiya jaye ga
+
+why:
+            very less page reloads
+            extreme use of resuable components
+            very efficient
+            
+how to use: 
+            create components
+            make data if you want it
+            link the data
+            and change data whenever you want REACT will react.
+when: 
+            baray level pr app create krna ho jis reusable structure aur bohat sari cheeze ho rahi ho
+            
+
+
+Things to rememeber
+        Component : aik FUNCTION hai jo JSX return krta hai
+        JSX : similar to html with superpowers
+
+21: Passing Data Via Props
+    -> Communication from Parenet to Child
+    -> Data flows one way (downwards)
+    -> props are immutable means props sent to components through app can not be changed in components. we can change but change wont effect beacuse everytime app re renders it will  paint actual values to props
+
+22: CSS Modules
+    -> Adding Bootstrap
+          1. npm i bootstrap@5.3.3
+          2.   /* The following line can be included in your src/index.js or App.js file */
+          import 'bootstrap/dist/css/bootstrap.min.css';
+    -> Use Modules for Components
+        Method 1:
+          1. make: moduleName.module.css
+          2. import style from "./moduleName.module.css";
+          3. use in Module.jsx as : <h1 className={style.class}></h1>
+        Method 2:
+          1. make: moduleName.css
+          2. import from "./moduleName.css";
+
+23: Passing Children
+    -> <Component> Giving Data inside Components </Component>
+    -> we can render this data by returning {(props) ===> props.children} or {({children}) ===> children} in Component.jsx
+
+24: Handeling Events
+    ->  React uses synthetatic events, not direct broweser events
+    ->  Avoid using "in-line arrow functions" in JSX for better performance
+    ->  onClick
+    ->  onChange  --> use with forms
+          
+25: Passing Function Via Props
+    -> Communication from Child to Parent
+    -> Commonly used for event handling
+    -> Pass Dynamic Behavior between Components
+    -> Example : <Button onClickFunc ={handleClick} />
+          
+26: Managing States (useState HOOK)
+    -> HOOK : special type of function that is already made to use different features in component
+    ->(CHW) Hooks: These are React functions that are used to access react features in react functional components.
+
+  WE WANT that react stores variable values and between rerenders it saves the value and only changes the value when state changes. 
+    -> useState HOOK : to manage states
+    -> (CWH)useState: use and set data 
+    -> data that changes over time
+    -> state is local and private to the component
+    -> State changes cause the component and child components to rerender
+    -> useState : returns array of 2 elements (1st elem: holds intial/current value...2nd elem: funtion to change the value)
+    -> Parent Components can pass states down to children via  props
+    -> Lifting State Up: share state between components by moving it to their clossest common Parent(Ancestor)
+
+27: State vs Prop
+    -> STATE : 
+        -> loacal and mutable
+        -> intialized within component
+        -> causes re-render when updated
+        -> Managed using useState
+    -> PROP : 
+        -> passed into component from its parent
+        -> Read Only(Immutable) within recieving component
+        -> Allow parent to child communication
+        -> changes in props can a also cause re-render
+
+28: Important Recources
+    -> React Icons
+        -> npm i react-icon --save
+        -> import {[iconName]} from "reac-icons/[family]"
+        -> use icon as Component tag
+    -> React Developer Tools in Browser
+        
+29: How React Works
+    -> Root Component
+        -> App is root (main) component of React App
+        -> starting point of react component tree.
+    -> Virtual DOM
+        -> React creates an in memory structure called virtual DOM
+        -> Lightweight representation where each node stands for a component and its attributes
+    -> Reconciliation Process
+        -> When component data changes React updates Virtual DOM's state to mirror these changes
+        -> React then compares the current and previous versions of virtual DOM
+        -> Identfies specific nodes that need updating
+        -> only these nodes are updated in real browser making it efficient.
+    -> ReactDOM
+        -> Actual updating of browser's DOM is handled by library react-dom
+    -> Root Element
+        -> root div acts as container for React App.
+        -> react app starts executing from script tag
+    -> Strict Mode Component
+        -> does'nt have visual representation
+        -> spots potential issues in App
+    -> Platform Independence
+        -> React Native can be used to craft mobile Apps
+
+33: useRef() HOOK
+    -> allows access to DOM elements and retains mutable values without re-renders
+    -> used with ref attribute for direct DOM interaction
+    -> can hold previous state or prop values
+    -> not limited to DOM refrences, can hold any value
+    -> can be passed as props also
+    -> (CWH)
+            2 use cases:
+                1. whenever one state changes in component whole component re-renders and resets.
+                    useRef will prisist its value even after render.
+                1. to refer html tags (selecting like in DOM)
+
+                NOTE:
+                -> When you change the ref.current property, React does not re-render your component.
+                 React is not aware of when you change it because a ref is a plain JavaScript object.
+                -> Do not write or read ref.current during rendering(means in dom), except for initialization. This makes your component’s behavior unpredictable.
+
+34: Update State from previous state
+    -> Spread Operator: used to maintain immutablity when updating arrays or objects.
+    -> Functional Updates: used to avoid state values during asynchronous updates.
+
+35: context API :useContext() HOOK
+    -> alternative to prop drilling(component composition)
+    -> Setup:
+            -> Store: make Store Folder for context files
+            -> initialization: use React.createContext and export it with initial values.
+            -> Provider: implement contextName.Provider in components
+            -> Access Value: use the useContext hook
+            -> Dynamic Data: combine context usle with state
+            -> Export Functions: context can also export functions
+
+36: useReducer() HOOK
+    -> 2 main components
+            REDUCER: A PURE FUNCTION that takes (currentState,action) and returns new state
+            ACTION: An OBJECT describing what happend
+    -> others
+            INITIALIZATION: invoked as
+                    const[state,dispatc]=useReducer(reducer,intialState)
+            DISPATCH: actions are dispatched using dispatch function. which invokes
+                    reducer with current state and given action
+
+38: Data Fetching using fetch()
+    -> fetch() : JS API for network requests
+    -> Promise-Based : returns a promise with a response object
+    -> Usage: default is GET. for POST use method:"POST"
+    -> Response: use .then() and response.json() for JSON data.
+    -> Errors: does'nt reject on HTTP error. check response.ok 
+    -> Headers: managed using Headers API
+
+39-40: useEffcet() HOOK
+    -> useEffect() handles side effects like Data Fetching and Events Handeling.
+    -> useEffect() runs autometically after every render by default.
+    -> by providing Dependency Array, useEffcet() will  only run when specific variables change. Empty Array means useEffcet runs only once.
+    -> Multiple useEffcet() hooks can be used in single component.
+    -> useEffcet() Hook cleanup: returning a function from useEffcet() allows for cleanup, ideal for removing event listners.
+    -> (CWH)
+              -> useEffect: this is the function that runs when purticular state aur prop is changed
+                HOW REACT WORKS:
+                react renders components every time any state changes in component. if parent component contains some other child component and data in parent component is changed then it renders all data in parent component and first renders data in deepest child components. 
+                so useEffect function runs accrodigly (from deepest child towards parent)
+
+                useEffect(() => {
+                    first
+                    return()=>{
+                        third : (cleanup function: jb b component unmount ho ga tb ye chalay ga)
+                    }
+                }, []);
+
+                Note: every time component re-renders it is unmounted then mounted so third funtion will run again and again if included in useEffect that runs on every render.
+
+43: useCallback() Hook
+    -> MEMOIZATION : Preserves function across renders
+    -> Dependency Array : Recreates function only when specific dependency changes
+    -> Event Handlers: used to keep consistent function refrences across childs specially event hanlder passed to childs
+    -> with useEffect() prevents infinite loops by maintaining function refrences.
+    -> (CWH)
+        -> useCallback: to memoize functions(freeze funtions)
+        -> dependency array: jb count ki vallue change na ho ConstFunc ko freez rkho. count chnagee hone pr function chnage kr du
+
+44: useMemo() Hook
+    -> MEMOIZATION : Preserves(caches) the result of expensive claculations/values across renders
+    -> Dependency Array : Recomputes cached values only when specific dependency changes
+    -> useCallback(): To memoize Functions. useMemo(): To memoize values or results of functions.
+    -> (CWH)
+        -> useMemo: wrap expensive computatiional tasks inside memo, they will be calculated only once
+        -> To memoize variable(freez variables value)
+
+45: Custom HOOKS
+    -> start with use
+    -> can combine Multiple built in HOOKS.
+    -> can return {arrays, objects, or any other data type}
+
+47-51: REACT ROUTER
+    -> npm i react-router-dom
+    -> RouterProvider : wraps the app for routing capabilities
+    -> createBrowserRouter : to create mapping for router 
+    -> Routes are react components 
+    -> LAYOUT ROUTES :  
+        -> help to use shared elements  
+        -> Outlet component is used to render children at correct places  
+    -> ROUTE LINKS :    
+        -> Link component with "to" property is used to avoid reloading
+        -> useNavigate HOOK can be used to do navigations programmatically
+    -> DATA FETCHING USING LOADER :    
+        -> loader() method can be used to load data before a particular route is executed
+        -> loader() must return the data that is loaded or promise
+        -> data is available in component and all other child components
+        -> useLoaderData() can be used to get the fetched data.
+        -> Loading state can also be used
+    -> SUBMMITTING DATA USING ACTION : (TS> 14:40)    
+        -> Action method can be used to perform an action on submittion of Forms
+        -> custom "Form" component along with "name" attribute is used for all inputs.
+        -> Action Function will get a data object.
+        -> to generate correct request object method="POST" attribute should be used.
+        -> Data.request.formData() > to get form data object.
+        -> Object.fromEntries(formData) > to get actual input data.
+        -> redirect() response can be returned for navigation after submittion.
+
+52-58: REDUX
+    -> Local State (states inside component (useState,useReducer))
+    -> Cross Component (sharing states within parent and child component (useState with prop drilling))
+    -> App Wide (states available for whole app(useState,context api,REDUX))
+
+    -> What is REDUX:
+        -> State management for cross component or app-wide state
+    
+    -> Context API vs REDUX:
+        -> Context : slow proformance, repaints over small state changes
+        -> Context : achaa hai, achaa hai.
+    
+    -> How REDUX works:
+        -> Single Sourrce: uses a single central store to maintain entire application states.
+        -> Actions: Components never directly change the store. chnages to the states are made throuugh dispatched actions
+        -> Reducer: a pure function that returns the new state.Actions are processed by reducers
+        -> Immutable States: every state is immutable. every change results in a new state object.
+        -> Different from useReducer HOOK
+    
+    -> Working with REDUX
+        -> npm init -y
+        -> npm i redux
+        -> import redux from 'redux'
+        -> setup 4 basic things
+            1. Reducer
+            2. Store
+            3. Subscriber
+            4. Actions
+        -> node redux.js to returning
+    
+    -> REACT with REDUX
+        -> npm i redux react-redux
+        -> create "Store" folder with "index.js" file
+        -> inside "index.js"
+            -> import {createStore} from "redux"
+            -> define reducer() and export store
+        -> Provide store to react
+            -> import {Provider} from "react-redux"
+            -> <Provider store={store}> <App/> </Provider>
+        -> Using the store
+            -> import {useSelector} from "react-redux"
+            -> useSelector() HOOK gets a slice of the store.
+            -> const counter = useSelector(store => store.counter)
+        -> Subscription
+            -> already setup and autometically cleared also. Re-execute only when your slice is changed 
+        -> Dispatch
+            -> dispatch actions using useDispatch() HOOK.
+    
+    -> REDUX TOOLKIT
+        -> npm i redux @reduxjs/toolkit
+        -> create "Store" folder with "index.js" file
+        -> inside "index.js"
+            -> import {configureStore} from "@reduxjs/toolkit"
+            -> Create Slices: 
+                    const counterSlice = createSlice({
+                        name : "counter",
+                        intialState : {counterVal:0},
+                        reducers:{
+                            add:(state,actions)=>{
+
+                            }
+                            .
+                            .
+                            .
+                            smallReducerMethods : (state,actions)=>{
+                            }
+                        }
+                    })
+            -> Configure Store: combines Multiple reducers 
+                    const store = configureStore({
+                        reducer:{
+                            counter : counterSlice.reducer
+                        }
+                    })       
+            -> export const counterActions = counterSlice.actions
+            -> export default store
+        -> Provide store to react
+            -> import {Provider} from "react-redux"
+            -> <Provider store={store}> <App/> </Provider>
+        -> Using the slices of store
+            -> import {useSelector} from "react-redux"
+            -> useSelector() HOOK gets a slice of the store.
+            -> const {counterVal} = useSelector(store => store.counter)
+        -> Subscription
+            -> already setup and autometically cleared also. Re-execute only when your slice is changed 
+        -> Dispatch
+            -> actions can be dispatched using dispatch(allAction.reducerMethod(payload))
+            -> counterActions.add({ num: 5 })
+            -> counterActions.add(5)
+            

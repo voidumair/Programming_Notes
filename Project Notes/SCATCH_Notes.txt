@@ -1,0 +1,101 @@
+SCATCH (Project Notes)
+  -> Seperation of concerns
+    - added mongoose connection in config/mongoose_connection.js
+    - created models/oweners_model.js for oweners
+    - created models/users_model.js for users
+    - created models/products_model.js for products
+
+  -> Setting up environment variables
+    METHOD 01: Using cmd
+      - setx NODE_ENV "development"
+    METHOD 02: Using .env
+      - add .env in project
+      - DEBUG=development:* (in .env)
+    METHOD 03: config folder NODE_ENV
+      - setx NODE_ENV "development"
+      or
+      - NODE_ENV=development (in .env)
+      - make config folder
+      - make development.json
+      - add environment variables
+      eg:
+      - make config/development.json
+      - add MONGODB_URI
+
+  -> Using environment variables
+    METHOD 01:dotenv
+    dotenv: this package will provide access to .env vars easily
+      - npm install dotenv (in project)
+      - require('dotenv').config(); (in app.js)
+      - process.env.DEBUG (anywhere in project)
+    METHOD 02:config
+    config: this package will access environment variables from config folder according to value of NODE_ENV
+    - install and require [config] package
+    - config.get(MONGODB_URI)
+
+  -> Using Debug
+    - const dbgr = require("debug")("development:mongoose")
+    - dbgr("connected")
+    - set environment variable
+        - setx DEBUG "development:*"
+        to see DEBUG value: console.log(process.env.DEBUG);
+        
+  -> bcrypt
+    - to hash the password
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(password, salt, async function (err, hash) {});
+
+  -> jsonwebtoken
+    - we will set token for details that are required for user authentication in protected routes after   user is logged in
+    - set token
+      let token = jwt.sign({email, id:createdUser._id},"secret")
+    - decode token
+      let decodedToken = jwt.verify(req.cookies.token,"secret")
+
+  -> setting and reading cookie
+    - setting cookie on users browser
+    res.send("token",token)
+    - reading cookie from users browser
+    req.cookies.token
+
+  -> flash messages and req.Somthing
+    - we can set data in one router using these and can read data on any second router
+    - flash messages
+      - flash message stays there till you don't send a new request
+      - How to set
+        - install and setup "express-session"
+        - install and setup connect-flash package
+        - to set message
+          req.flash("messageName","messageData")
+        - to read message
+          req.flash("messageName")
+    - req.Somthing
+      - set
+        req.user = user;
+      - read
+        req.user;
+
+  -> MULTER: memory storage
+    - In multer.js
+      const multer = require("multer");
+      const storage = multer.memoryStorage();
+      const upload = multer({ storage: storage });
+      module.exports = upload;
+    - In form tag
+      add attribute: enctype="multipart/form-data"
+    - In API
+      add middleware: upload.single('fileName')
+      acccess file: req.file
+
+
+
+
+
+
+
+
+
+
+
+
+

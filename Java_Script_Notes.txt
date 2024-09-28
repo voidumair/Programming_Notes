@@ -1,0 +1,593 @@
+------------ DAY01 ----------
+	JS (-topics)
+		1. words and keywords
+		chacha = word (esa kuch b jis ka js mai kuch mtlab na ho)
+		for = keyword (esa kuch b jis ka js mai kuch mtlab ho)
+
+		2. var const let
+
+		3. Hoisting
+		variables and functions are hoisted which means their declaration is moved on the top of code
+		Example:
+		console.log(a); // will print undefined cz (declaration:var a;) is moved to top but not value
+		var a = 12;
+			 -> (In Javascript) undefined : Existence hai but value is not known
+			 -> not-defined : Existence hi nahi hai
+
+		4. Types in JS
+			 Primitive : aisi value jisko copy krne pr real copy ho jaye
+			 Refrence : aisi value jisko copy krne pr real copy ni hota blke us main value ka refrence pass ho jata hai
+		primitives = number,string,null,undefined,boolean
+		refrence = [] () {}
+		Example:
+		primitive :
+		var a = 12;
+		var b = a; // b=12
+		b = b+2; // b = 14 and a = 12
+		// refrence :
+		var c = [1,2,3];
+		var d = c; // c=[1,2,3] and d = [1,2,3]
+		d.pop(); // d = [1,2] and c = [1,2]
+
+		5. Conditionals (if, else if , else)
+
+		 6. Loops (for,while)
+
+		7. Functions
+			 Parameters(params) : dummy arguments used in function defination
+			 Arguments : real values passed to function when calling it
+
+		8. Arrays
+			 contigous block of memory to store group of values
+		push, pop, shift, unshift, splice
+		var arr = [1,2,3,4,5];
+		arr.push(6); // add 6 to end of array
+		arr.pop(); // remove 6 from end of array
+		arr.unshift(0); // add 0 to start of array
+		arr.shift(); // remove 0 from start of array
+		arr.splice(2,1); // remove from 2nd index till one value. means remove 3 from array
+
+		9. Objects
+		holding details of one individual in key value pair;
+		Blank Object
+		var a = {};
+		Filled Object
+		var b = {
+			age:20,
+			name:"Umair",
+			email:"umairsarwar42@gmail.com",
+			contact:12345678910,
+			// age, name, ... are properties
+			func1 : function s(){},
+			func1 is called method
+		};
+
+		b.age;
+		b.age = 30;
+
+------------ DAY02 ----------
+	JS (--topics)
+		1. diffrence in var and let
+		var:
+			 old JS(es5) mai tha
+			 var function scoped hota hai, var apne parent function mai kahin b use ho skta hai
+			 var adds itself to the window object
+		  
+		let and const:
+			 let and const new JS(es6) mai hain
+			 let and const braces scoped hotay hain
+			 let and const do not add themselves to the window object
+
+		2. window object
+		JS kuch features ese hain jo JS ka part ni hain blke JS window se wo feature use kr leti hai
+		window object is a box of features given by browser to use with JS
+
+		3. Browser context api
+		browser 3 cheezen provide krta hai
+				 window object
+				 stack memory
+				 heap memory
+		These are browser context api
+
+		4. stack
+		konsi cheez kese chalay gi (Last in first Out)
+
+		5. heap
+		jitna b data ya intermediate data hum bnaatay ussay store krne k liye heap memory use hoti
+
+		6. Execution Context
+			 Execution Context is a container where function's code is executed. it is created
+		when function is called. It contains 3 things:
+						   i) variables
+						   i) functions
+						   i) lexical environment
+
+		7. Lexical Environment
+			 Lexical Environment aik chart hai jo details rkhta hai k aik function konsa data access aur konsa nahi
+			 It holds function's scope and scope chain
+
+		8. How to copy refrence values
+		 using spread operater (...)
+		var a = [1,2,3,4,5];
+		var b = [...a];
+		b.pop();
+		var obj1 = {name:"umair"};
+		var obj2 = {...obj1};
+		obj2.name = "abrar";
+
+		9. Truthy and Falsy
+		 JS mai kuch b likho tu wo truthy ya falsy se belong krti hai
+		 falsy : 0 , false , undefined , null , NaN , document.all
+
+		10. forEach forIn forOf do-while
+			 --> forEach
+				 array k liye use hota hai
+				 by default forEach array mai changes ni krta blke array ki temporary copy mai changes krta hai
+		var c = [1,2,3,4,5,6,7];
+		c.forEach(function(val){
+			console.log(val+2);
+		})
+		console.log(c); // c is unchanged
+
+			 --> forIn
+				 objects k liye use hota hai
+		var obj3 = {
+			name:"umair",
+			age:20,
+			city:"Lahore",
+		};
+		for(var key in obj3){
+			// console.log(obj3.key); // returns undefined
+			// console.log(key , obj3[key]);
+			obj3[key] = "Changed";
+			console.log(key , obj3[key]);
+		}
+		console.log(obj3); // obj3 is changed
+
+		11. Callback Functions
+			 jo code kuch time baad chlna ho tu JS ko pta ni hota k wo complete howa ya nahi, ese code ki complition pr JS
+		ko callback function btata hai k wo complete ho gaya hai
+			 aisa code jo baad mai chlna ho ussay hm aik function dete hain k jb time complete ho jaye tu ye funtion chl jye
+		ese function ko hm call back funtion kehte hain
+		setTimeout(function(){
+			console.log("2 sec");
+		}, 2000);
+
+		12. First class functions
+		function ko as a value use kr sktay hain
+		var a = function(){};
+
+		function abcd(a){
+			a();
+		}
+		abcd(function(){console.log(hello);})
+
+		13. how arrays are made
+			 array is an object actually
+			 to check if an object is array or not
+			 Array.isArray([]) --> true      Array.isArray({}) --> false
+		var arr = [2,3,4,5];
+		var arr = {
+			0:2,
+			1:3,
+			2:4,
+			3:5,
+		}
+		console.log(Array.isArray(arr));
+
+		14. how to create negative index array
+		arr[-1] = 45;
+
+		15. How to delete object prop
+		var abc = {
+			name : "123",
+			age : 24,
+		}
+		delete abc.age;
+
+------------ DAY03 ----------
+	1. Higher Order Funtions
+		Functions which accept a funtion in a parameter or return a funtion or both
+
+		function abcd(val){ // higher order funtion if val parameter takes funtion as arguement
+			val();
+			return function(){}; // or if funtion return a function
+		}
+		abcd(function(){console.log("Learning Higher Order Functions");});
+
+		imp : forEach() always takes another function inside it so its a higher order function
+
+
+		2. Constructor Funtions
+		normal funtion jis main this ka istemal ho aur aap funtion ko call krte waqat new keyword ka use kren
+		jb aik jesi properties waalay buht saray elements bnany hon tb constructer fncs use hotay hain (same as structures)
+
+		function sanchaaOfBiscuit(){
+			this.width = 12;
+			this.height = 12;
+			this.color = "brown";
+		}
+
+		var bis1 =  new sanchaaOfBiscuit();
+		var bis2 =  new sanchaaOfBiscuit();
+		var bis3 =  new sanchaaOfBiscuit();
+
+		function circularButton(color){
+			this.radius = 2;
+			this.color = color;
+			this.icon = false;
+			this.pressable = true;
+		}
+
+		var b1 = new circularButton("red");
+		b1.pressable = false;
+		var b2 = new circularButton("yellow");
+		var b3 = new circularButton("green");
+		console.log(b1);
+
+		3. First Class Function
+		A language is said to have first class function when the functions in that language are traeted as variables/normal values.
+		You can pass them as arguments to another functions
+
+
+		4. new keyword
+		new keyword creates a blank object for the constructor function which is being called after new 
+
+		function circularButton(){
+			this.radius = 2;
+			console.log(this); // this points to window untill new object is not created using new
+		}
+		circularButton();
+		new circularButton();
+		^
+		|
+		this will create a blank object and give it props like:
+		{
+			radius : 2,
+		}
+
+
+		5. iife --> immediately invoked function expression
+		funtion foran chalta hai aur koi private data bna sktay (same as private data in classes CPP)
+		return object mai private data accesss krne ka funcs likh sktay (like public methods in CPP)
+
+		var data1 = (function(){
+			var val = 12;
+			return{
+				setter:function(vab){
+					val = vab;
+				},
+				getter:function(){
+					return val;
+				},
+			}
+		})();
+
+
+		6. Prototype
+		 javascript adds a property called  [[prototype]] to every object, every object contains prototype.
+		Prototype contains :
+		[[prototype]] contains many helper properties and methods which we can use to complete our tasks
+		using .lenght for array is example of using property of prototype in array
+
+
+		7. Prototypal Inheritence
+		Inheritenc is passing parent's features or properties to their childrens.
+		to do the same in JS with the help of prototype(one extra property always given by JS to every object) is PI.
+
+		var human = {
+			canTalk: true,
+			canWalk: true,
+			canFly: false,
+		}
+		var student = {
+			canRead: true,
+			canWrite: true,
+		}
+
+		student.__proto__ =human;
+
+
+		8. this , call , apply , bind
+		this
+		its a special keyword which changes its value in different context
+		contexts:
+
+		 in global scope --> this points to window object
+			console.log("Global Scope: ",this);
+
+		 in a function scope --> this points to window object
+			function abcd(){
+				console.log("Function Scope: ",this);
+				// here this is pointing window object
+				function f(){
+					console.log("Function Scope: ",this);
+					// here this is still pointing window object
+				}
+				f();
+			}
+			abcd();
+		   
+		 in a method scop --> this points to parent object
+			var obj = {
+				name : "umair",
+				display:function(){
+					console.log("method Scope: ",this);
+				},
+			}
+			obj.display();
+
+			let obj1 = {
+				names:["Umair"],
+				gbText :" Go to next row",
+				speak(){
+					console.log("Function Scope: ",this);
+					// here this is pointing obj1
+					this.names.forEach(function(element){
+						console.log("Function 2 Scope: ",this);
+						// here this will start pointing window object
+					});
+				}
+			}
+			obj1.speak();
+
+		 in any method --> this always refers to parent object
+			var obj = {
+				name : "umair",
+				display:{
+					name2:"m2",
+					function(){
+						console.log("method Scope: ",this);
+						// here this is pointing to display object (parent)
+						function a(){
+							console.log("method Scope: ",this);
+							// here this will start pointing window object
+						}
+						a();
+				}},
+			}
+			obj.display.function();  // method inside display{} points to display(parent)
+
+		funtion inside method --> this points to windows object
+
+		in event listeners --> this refers to whateevr written befor addEventListener
+		var button = document.querySelector("button");
+
+		button.addEventListener("click", function () {
+			this.style.color = "white";
+			this.style.backgroundColor = "red";
+			this.style.height = "300px";
+			this.style.width = "300px";
+			this.style.transition = "all 1s ease";
+			this.innerHTML="You Should'nt have clicked !!!"
+		});
+		this refres to button here
+
+		conclusion
+		global --> window
+		function --> window
+		method --> object
+		function inside method --> window
+
+		call , apply , bind
+		jab b aapko aik function chalana hai jis mai this ki value kuch aur hai lkn aap chahtay ho k this ki value 
+		koi aur object ho tb call apply bind use krte hain
+			function abc(){
+				console.log(this);
+			}
+			var obj = {
+				name:"obj",
+			}
+
+			call
+			abc(); // this pointing to window
+			abc.call(obj); // this pointing to obj now
+
+			function abcd(val1,val2,val3){
+				console.log(this);
+			}
+			abcd.call(obj,1,2,3); // this pointing to obj now
+
+			apply
+			abcd.apply(obj,[1,2,3]); // accepts 2 arguements only. parameters are passed in array in this case
+
+			bind
+			var binded = abcd.bind(obj,1,2,3); // bind this of abc to obj but don't run the funtion
+			binded()
+
+			let obj1 = {
+				names:["Umair"],
+				gbText :" Go to next row",
+				speak(){
+					console.log("Function Scope: ",this);
+					// here this is pointing obj1
+				   function abc(){
+						console.log(this);
+				   }
+				abc.call(obj1); // here this is pointing to obj1 now
+				}
+			}
+			obj1.speak();
+
+			9. Pure and impure functions
+			pure funtion is any funtion which:
+				 1. It should always return same output for same input
+				 2. it always never change/update the value of a global function
+
+------------ DAY04 ----------
+	Async JS
+
+		1. What is sync and async
+
+		sync : aik task k baad hi doosra uss k baad hi 3sra ho ga. Jb tk aik command complete na ho dusra task start ni ho ga
+		async : Saray tasks aik saath start kr du jis ka ans pehle aa jaye uss ka jawab de dena
+		example of async code:
+		 -> setTimeOut
+		 -> setInterval
+		 -> promises
+		 -> fetch
+		 -> axios
+		 -> XMLHttpRequest
+
+		 -> callbacks
+		 -> then-catch
+		 -> try-catch
+		 -> async-await
+		rest of other code will be syncronous
+
+
+		2. async js hai kiya
+		async code ka main motive hota hai k jb hamain pta nahi k code ka ans kitni der mai aye ga to jab bhi ans aa jaye uss ans ki respect se koi particular code chl jaye
+		exmaple:
+			 setTimeout(callback , time_in_miliseconds); callback : is a function always
+
+
+		3. JS async ni hai
+		4. Async ki poori kahani
+		4. single and multi threading
+		 async ka mtlab hota hai 2 kaam aik sth hona but JS is single threaded(it can't do multiple tasks simulteneously)
+			 JS includes
+				 Main Stack : jo kuch b MS mai ho wo output krta hai (MS=>Execution)
+				 Side Stack : jo kuch b SS mai ho wo BTS processing krta hai aur processing complete hone pr ussay MS main la k chalaya jata hai     
+
+			 sync code always moves to MS and async code moves to SS
+			 jb MS khali hota hai sirf tb SS ko check kiya jata hai kiya uss mai code ki processing complete ho chuki hai agar han tu uss code ko MS mai move kr diya jata hai
+			 EVENT LOOP: SS se MS mai cheezen le k ata hai.(pehle MS khali hona chaye then SS mai jis code ki processing complete ho gayee ussay MS mai la ata hai)
+		example:
+		console.log("hey1");
+		console.log("hey2");
+		setTimeout(()=>{
+			console.log("hey3");
+		},0)
+		console.log("hey4");
+
+
+		6. callbacks
+			 callback aik function hota hai jo aysnc code ki completion pr chlta hai
+		example:
+		setTimeout(() => {
+			console.log("i am inside callback func")
+		}, 1000);
+
+
+		7. promises
+		8. then-catch
+		let p1 = new Promise((resolve, reject) => {
+			let n = Math.floor(Math.random() * 10);
+			if (n < 5) {
+				return resolve(n);
+			}
+			else {
+				return reject(n);
+			}
+		});
+
+		let p2 = p1.then((data) => {
+			console.log("below 5 : ", data);
+			return new Promise((res, rej) => {
+				return res(data / 2);
+			});
+		})
+		p2 = p1.catch((data) => {
+			console.log("above 5 : ", data);
+			return new Promise((res, rej) => {
+				return rej("no data/2");
+			});
+		});
+
+		p2.then((data) => {
+			console.log("data/2 : ", data);
+		}
+		);
+		p2.catch((data) => {
+			console.log(data);
+		});
+
+
+		9. async await
+		 Function jisme aap async code likhenge uss mai promises use kren gai aur then lagana paray ga, isse bachne k liye async await use kr sktay
+		 to use : write "async" with the nearest function having async code and "await" with async code
+		AAm Zindagi
+		function abcd(){
+			fetch(`https://randomuser.me/api/`)
+			.then(function(raw){
+				return raw.json();
+			})
+			.then(function(data){
+				console.log(data);
+			})
+		}
+
+		await lganay se aik then ht jata hai
+		async function abcd() {
+			let raw = await fetch(`https://randomuser.me/api/`)
+			let data = await raw.json();
+			console.log(data);
+		}
+
+		abcd()
+		
+------------ DAY05 ----------
+	ES6 JavaScript
+
+		1) let and const - variables and constants
+			 dono values store krte hain but dono differently behave krte hain
+				 1. let change ho skta, const nahi
+				 2. const ko first time value dena zaroori hai - 
+				 3. dono mai kuch simlarities hain
+					 -> dono es6 se hain
+					 -> dono khudko window object mai add ni krte
+					 -> dono braces scoped hotay hain
+
+		2) arrow functions
+			 new JS mai 1 type ka func hai jis k 3 roop hain
+				 1. basic fat arrow function
+						let fnc1 = ()=>{}
+				 2. fat arrow function with one parameters
+						let fnc2 = (param1)=>{}
+						let fnc3 = param2 => {} // but if more than one params are passed we must write them in (fat)
+						fnc2(12);
+						fnc3(13);
+				 3. fat arrow function with implicit return
+						let fnc4 = () => 122 // hm ne return nahi likha phr b return ho ga. arrow k baad jo b likhen gai wo return ho ga
+						console.log(fnc4());
+
+		3) template literals - backticks ` `
+			 console.log(`hey i am calculating 2+2=${2+2}`);
+
+		4) default parameters
+			function abcd(a=1,b=2,c=3){
+				console.log(a,b,c);
+			}
+			abcd();
+			abcd(10);
+			abcd(10,23);
+
+		5) spread/rest - ...
+		... as spread operator - element k saaray values ko uss jaga bakhair dena 
+		spread use hota hai copy ya us location pr kisi aur elm ki values bakhairne k liye
+		let arr1 = [1,2,3,4,5,6,7];
+		let newarr = [...arr1];
+		... as rest operator
+		rest use hota hai jb apko bachay hoye values ek variable mai dalna hon
+		function abc(a,b,c,...d){
+			console.log(a,b,c,d);
+		}
+		abc(1,2,3,4,5,6,7,8);
+
+		6) dystructuring - array and objects se data bahir nikalna in variables
+		let arr = [1,2,3];
+		let [a,b,c,d] = arr;
+		a = 1
+		b = 2
+		c = 3
+		d = undefined
+		let [f,,g] = arr;
+		f = 1
+		g = 3
+
+		let obj = {name:"umair",age:20};
+		let{age} = obj;
+		age = 20
+
+

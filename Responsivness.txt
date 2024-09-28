@@ -1,0 +1,46 @@
+------- Responsivness ------
+	undrastading units
+
+		px
+			fixed size
+			if screen size changes box size given in pixels does'nt change
+		%
+			size according to parent    
+			if screen size changes box size given in % adopts respectve percentage
+		vw, vh
+			size according screen
+			if screen size changes box size given in vh,vw adopts defined percentage area of screen
+			can be given to text to achieve responsiveness
+		vmax, vmin
+			vmax : adjust size according to dimension which is greater
+				firstly adjusts size according to width after reaching at certain
+				width (when height becomes greater than width) will adjust according to height
+			vmin : adjust size according to dimension which is lesser
+				firstly adjusts size according to height after reaching at certain
+				height (when width becomes greater than height) will adjust according to width
+		em, rem
+			em : parent pr depandant
+			> apne parent container k relative font size set kr de ga
+			> parent (10px) * item (3em) = item (10*3 = 30px)
+			> 3em means 3 times of font-size of parent = 30px
+			for padding
+			> padding = (fontsize of parent * fontsize of item) * size of padding )
+			> padding 3em means 3 times of (font-size of item in pixels fs of item = parent size * item's font size in em) = 90px
+			
+			rem : screen size pr depandant (1 rem = 16px)
+			> base html k relative font size set krne k liye
+			> font-size 3rem means 3 times of (font-size of base html)
+			basehtml (16px) * font-size (3rem) = 48px
+			same for padding
+
+
+	layout of a website
+
+		absolute vs flex
+			use flex box
+				use flex wrap in parent to avoid shrink of contetnt inside parent when size is reducing
+
+
+	Media Queries
+
+

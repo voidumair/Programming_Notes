@@ -1,0 +1,594 @@
+-------- JAVA NOTES --------
+-> POP <-
+-> Data Types
+  -> Premitives: 
+  Integer:
+    byte(1 byte, default:0)
+    short(2 byte, default:0)
+    int((4 byte, default:0))
+    long(8 byte, default:0L)
+  Deccimal
+    float(4 byte, default:0.0f)
+    double((8 byte, default:0.0d))
+  Character
+    char(2 byte, default:'\u0000')
+  Boolean
+    bool(1 bit/1 byte, default:false)
+  -> Non-premitives (Objects): 
+  String, Date, Array etc...
+
+-> User Input
+  import java.util.Scanner
+  main(){
+    Scanner input = new Scanner(System.in)
+  }
+  -----
+  input.nextShort() --> short value
+  input.nextInt() --> int value
+  input.nextLong() --> long value
+  input.nextDouble() --> double value
+  input.nextFloat() --> float value
+  input.nextCharacter() --> character value
+  input.nextLine() --> string value
+
+-> Type Casting
+  -> Implicit (Widening) - by default
+    lower -> higher size
+    byte -> short -> int -> long -> float -> double
+
+  -> Explicit (Narrowing)
+    higher -> lower size
+    byte <- short <- int <- long <- float <- double
+
+    int num = (int)5.444f;
+    int num = (int)5.444d;
+
+-> Operators
+  -> Order of operations: BODMAS same precedence ->(left to right)
+  -> Assignment: =
+  -> Short Hand Operators: += , -= , *= , /= ,  %=
+  -> Unary Operators: -y , ++y , y++ , --y , y--
+
+-> Conditionals
+  -> if else
+    if(condition){
+      blah blah
+    }
+    else if(condition){
+      blah blah
+    }
+    else {
+      blah blah
+    }
+
+-> Bit Wise Operators
+  -> AND (&) : 1 if corresponding bits are 1, 0 otherwise
+  -> OR (|) : 1 if any of corresponding bits is 1, 0 if both bits are 0
+  -> NOT (~) : inverts the bits
+  -> XOR (^) : 1 if corresponding bits are differenet, 0 otherwise
+  -> Left Shift (<<) : Shifts the oprand's bits to the left by number of right operand (multiply by pow(2,n))
+  -> Right Shift (<<) : Shifts the oprand's bits to the right by number of right operand (divide by pow(2,n))
+
+-> Loops and Arrays
+    Loops: 
+    - while(condition){}
+    - do{}while(condition)
+    - for(int i=0;i<100;i++){}
+    - for-each : for(dataType variable : array/collection) {
+  // code to be executed for each item}
+    Array:
+    int [] arr1 = new int[10];
+    int [] arr1 = new int[]{1,2,3};
+    int [5] arr1 = {1,2,3,4,5};
+    int [] arr1 = {1,2,3,4,5};
+
+-> Ternery Operator
+    condition ? exp1 : exp2;
+
+-> Switch Case
+    switch(value){
+      case 1: do-something;
+      break;
+      .
+      .
+      default: do-me;
+    };
+    
+    ANOTHER
+    String output = switch(value){
+      case 1 -> "Monday Go";
+      case 2,3 -> "Monday Not Go";
+      case 4 -> "Monday GO GO";
+      default -> "default";
+    };
+
+-> OOP <-
+-> Classes and Objects
+ -> this
+      - this: means current object.
+        this.instanceVarible
+        if static variable : ClassName.staticVarible
+      - this(): calls the constructor of current object/instance
+ -> static
+      - belongs to class not individual objects
+      - shared among all objects
+      - static methods: can be called without creatting the object (calling by ClassName.method()). can only directtly access static variables and other static methods
+      - No direct access to non static members of class
+ -> Constructor
+      - intializes new objects and set intial states for object's attributes
+      - same name as class
+      - no return type
+      - automatically invoked when object is created
+      - default, parametrized Constructors
+      - class can have multiple Constructors
+      - JDK provides constructor if we define no constructor, but if we define any construct JDK will not provide construct
+      - Constructor chaining:
+        Car(String color){
+          var1 = 23;
+          var2 = 400;
+          this.color = color;
+        } 
+        Car(){
+          this("red"); // this must be the first statement in constructor. dont create loop
+        }
+ -> Code Blocks
+      - block{} define scope of the variable.
+      - intialization Block: block{} runs each time an object/instance is created, even before any constructor.
+      - Static Block:static block{} runs once when class is created.
+
+-> Stack vs Heap
+  Stack: Ordered on the top of eachother. static
+    method invocations and local variable live in stack
+    Premitives(intrinsic data types) go to stack
+    refrence of non-premitives go to stack
+  Heap: No order. dynamic
+    Non-Premitives go to heap
+
+-> Data Types Compared
+    -Premitives(intrinsic): 
+      - Numeric(integers, floating points), Non Numeric (character,boolean)
+      - store actual values
+      - default value(0 or false)
+      - stored in the stack.
+      - compared by value. a==b
+
+    -Non-Premitives(derived): 
+      - Class, Objects, Interfaces, Arrays, String etc..
+      - stored in the heap.
+
+    -Refrence Types : 
+      - store refrence/adresses of objects and other non premitive data types.
+      - default value(null).
+      - compared by address. 
+            obj1.equals(obj2) -- compares values of objects
+            obj1 == obj2 -- compares addresses of objects
+            obj1 = obj2 -- allocates address of obj2 to obj1. both point to same object now.
+      - ClassName obj1; (refrence created in stack will point to the object that is stored in heap.)
+
+-> Garbage Collection and Finalization
+  Garbage Collection:
+  - Automatic. managed by JVM.
+  - Object that has no refrence are eligible to garbage collection.
+  - No manual control over GC.
+  - Generalization Collection: Java uses a Generalization Garbage Collection Strategy,which divides memory into differenet regions(young, old, and peremanent generations) based on object ages.
+  - GC occurs in heap memory.
+  - can effect application performance
+  - System.gc() call: manually trigger GC by calling this static method, not guranteed
+  Finalization:
+  - Before an object is garbage collected, the finalize() method may be called, giving the object a chance to clean up resources, however its not guranteed to run.
+  - it is geneally discourged.
+  
+-> toString()
+  - provides string representation of an object.
+  - it is inherited from Object class.
+  - by default returns [className@hashCode].
+  - System.out.print(obj.toString());
+  - System.out.print(obj); -- both are same.
+  - automatically call in string concatination.
+  
+-> String
+  - immutable : once String Object created, its value can not be changed, modifications create new String Object.
+  - String Pool(inside heap) : once a new String is created its checked againstt pool for a match to reuse.
+  - Comparing : == will compare refrences/address.
+      equals() method will be used to compare values.
+  - Concatination : each concatination using + creates new string. so string can use more memory when modiified frequently.
+
+  - String str1 = "abc";  (goes to string pool. now if new String is created and has same value "abc",then that will also point to the place in string pool where str1 is pointing).
+  - String str3 = new String("abc");  (goes to heap like normal object).
+
+  - eg:
+      String st1 = "abc";
+      String st2 = "abc";
+      (str1 == str2 => true, because both adresses are pointing to same object)
+
+      String str3 = new String("abc")
+      ((str1 == str3 => false, because both adresses are pointing to differenet objects))
+
+  - equals: to compare values of objects
+      str1.equals(str2)
+
+  - IMPORTANT: to PRINT multiple string concatination use printf
+      String name = "Umair";
+      int marks = 450;
+      printf("Hello, %s your marks are %d",name,marks);
+
+      % [flags] [width] [.precision] specific-character
+
+      %15s --> 15 spaces reserved. right aligned
+      %-15s --> 15 spaces reserved. left aligned
+      %S --> String CAPS
+
+      %15d --> 15 spaces reserved. right aligned.
+      %-15d --> 15 spaces reserved. left aligned.
+      %+d --> print sign for positive and negative numbers
+      %,d --> print , after every 3 digits.
+      %0d --> print 0 for extra spaces(0 padding)
+  
+  - STRING BUFFER vs STRING BUILDER:
+      String Buffer : Thread Safe, Slower than SB
+      String Builder : Not Thread Safe, Fastest
+          StringBuilder sentence = new StringBuilder("Hello");
+          sentence.append(" hey");
+          sentence.append(47);
+          sentence.toString --> toString is implicit,so no need to write
+
+-> FINAL keyword
+    - Variables:
+        final double PI = 3.14;
+        - variable becomes a constant.
+    - Method:
+        - A final method can not be overridden.
+    - Class:
+        - A final class can not be subclassed(can't be extended).
+    - Class having all Final attributes:
+        - creates immutable objects. values must be assinged on constructor definition.
+        - if all attributes in a class are final it makes it immutable class.
+
+-> OOP Principle
+    - Encapsulation: when an object exposes only selected information
+    - Abstraction: hides complex details to reduce complexity
+    - Inheritence: entities can inherit attributes from other entities.
+    - Polymorphism: entities can have more than one forms
+
+-> Import and Packages
+    - Package definition: in java package is a namespace that organizes classes and Interfaces. declared using package keyword at very begining of class.
+    - Import: Single Type Import: import java.util.List
+    - Import: On Demand Import: import java.util.*
+    - after creating package set path of the parent folder in environment variable or using "set CLASSPATH". 
+
+-> Access Modifiers
+    IMPORTANT: the root class must have public or default access
+
+    - Private : restricts access to the defining class only.
+    - Default : if no Modifier is specified then it default, allows access within the same package class only
+    - Protected : allows access within same package and subclasses.
+    - Public : allows access from any other class.
+
+-> Getters Setters
+    wahi sb kuch
+
+-> Inheritence
+    - allows a new class to inherit features from an existing class.
+    - code reusability
+    - access control : Protected Access Modifier
+
+-> Object Class
+    - Its the parent class of all classes.
+    - provides methods like : equals(), hashCode(), toString(), getClass()
+    - toString(): returns string representation of object
+
+-> hashCode and equals
+  - equals(): for logical equality check between objects. by default, it compares object refrences.
+  - hashCode(): generates integer hashCode representation of an object.
+  - Equals-Hashcode Contract: if two objects are equal accroding to equals(), they must have same hashCode. but two objects with same hashCode aren't necessarily equal.
+  - Overide both always
+
+-> Nested and Inner Class
+  - Nested Class: class within other class. static(static nested) and non-static(inner class)
+  - Static Class : static member of outer class. can access only static members of outer class.
+  - Inner Class : assosiated with the instance of the outer class. can access all members(also private) of outer class
+  - Local Class : defined within a block(method).
+  - Annonymous Inner Class : nameless and used for single-use implimantation. 
+
+-> Abstract Class and Method
+  - Abstract Class: used to declare non-instantiatable abstrat class that serves as base class.
+  - Abstract Method: method without implimantation. subclasses must implement all abstract methods
+
+-> Interfaces
+  - to declare abstract methods only.
+  - A class can implement multiple Interfaces.
+  - Interfaces can have default methods with implementation and static methods.
+  - Interface methods are inherently public and abstract except for default and static methods.
+
+-> Refrences and Objects
+  - Upcasting:
+      - converts subclass to super class refrence.
+      - Automatic and safe.
+      - Access only to superclass methods.(if superclass method is overrided in subclass then subclass method will be executed at run time).
+  - Downcasting:
+      - converts super class to subclass refrence.
+      - manual, needs instanceof check.
+      - Access only to subclass specific methods
+
+-> super KEYWORD
+  - to refer immediate parent class instance variable
+  - to invoke immediate parent class
+  - super(): immediate parent constructor 
+
+-> Method / Constructor Overriding
+  - when subclass provides implementation for a method already defined in superclass.
+  - run time Polymorphism.
+  - overridden method can be called through a superclass refrence holding subclass refrence
+
+-> EXCEPTION HANDELING
+  Object --> Throwable --> Error(Unchecked) , Exception(Run-time, Compile Time).
+
+  -> Exception is an object in java that contains info about exception, like type of exception etc...
+  -> Types of Exception
+    - Checked(Compile Time): must be handled in program
+    - UnChecked(Run Time): do not necessarily need to be handled
+  -> try-catch
+    - try -block contains code that can cause exception.
+    - cathc block handles the exception
+  -> throws
+    - decalre in method signature that a method may through Exception
+    - Then Exception must be handled by it calling function or that calling func may throws it to its parent
+    - If main() also throws, then JWM will handle the Exception. JWM can hanlde both compile time and run time exceptions.
+  -> throw
+    - Used to Explicitly throw an Exception.
+    - We can also throw user defined Exception(inherit new exception from Exception class)
+  -> throws vs throw
+    - Checked Exception: can not be propogated with throw and throws
+    - throw is used inside method body. throws is used after method parameters.
+    - throw can not throw more than one exception at one time. throws can declare more than one exception.
+  -> finally
+    - finally executes code after try-catch block.
+    - always runs even if return is there.
+  -> Custom Exception
+    - extend Exception(for checked exceptions) and RunTimeException(for Unchecked exceptions).
+
+-> File Handling
+  -> FileWriter Class
+    Object --> Writer --> OutPutStreamWriter --> FileWriter.
+    - for writing STREAMS OF CHARACTERS to files.
+    - its character based stream. best used for writing text files rather than binary files.
+    - Constructor:
+      - FileWriter(String FileName): takes file name as string
+      - FileWriter(File FileName): takes file as File object
+    - Methods:
+      - write(int c)
+      - write(char [] cbuf): writes an array of character.
+      - write(String str): writes String
+      - flush(): writes all data to file.
+      - close(): closes the stream
+  -> FileReader Class
+    - for reading STREAMS OF CHARACTERS from files.
+    - its character based stream. best used for reading text files rather than binary files.
+    - Constructor:
+      - FileReader(String FileName): takes file name as string
+      - FileReader(File FileName): takes file as File object
+    - Methods:
+      - read(): reads signle character. return it as integer(Unicode). -1 for eof character.
+      - read(char [] cbuf): reads an array of character.
+      
+-> COLLECTION
+  -> Varagrs
+    - allow method to accept any number of arguments. declared using ellipsis(...). internally treated as array. must be in last in parameters.
+    - definition: 
+      void sum1(int... otherAgs);
+      void sum2(int first, int second,int... otherAgs);
+    - implementation:
+      sum1(); 
+      sum1(1,2,3,4,5); 
+      sum1(new int[]{1,2,3,4,5});
+
+      sum2(1,2) 
+  -> Wrapper Classes
+    Byte, Short, Integer, Long, Float, Double, Boolean, Character
+    - Provide a way to use premitives as Objects.
+    - Java Automatic Handles Conversion bw Premitives and corresponding Wrapper Calsses.
+    - Allow Assignment of null to premitives.
+    - Required for storing premitives in collection objects.
+    - AutoBoxing: Automatic Conversion from premitive to Wrapper class.
+    - UnBoxing: Automatic Conversion from Wrapper class to premitive.
+
+    - Integer first = new Integer(55); --- Depricated
+    - Integer first = Integer.valueOf(55); 
+    - Integer first = Integer.valueOf("55"); 
+    - Integer first = 55; 
+    - Integer first = "55"; 
+  -> Collections Library
+    -> Collection Interface: The root Interface, decalres operations like(add,remove,clear,size).
+    -> List Interface: Ordered Collection, can contain duplicate elements.
+    -> Set Interface: Can not contain duplicate elements.
+    -> Queue Interface: Holds elements in FIFO order.
+    -> Map Interface: Not a true collection but part of Collections Framework. Stores Key-Value Pairs.
+
+    -> List(ArrayList)
+      - Ordered Collection, also known as sequence.
+      - allows duplicate elements.
+      - elements can be accessed by their integer index.
+      - Grows and Shrinks automatically when elementsadded or removed.
+      - <> : Diamond Operator. To define generics. these generic types only exist before compile time. after compilation all GTs will be removed.
+      - List(ArrayList) METHODS:
+        - add(Object o): appends element.
+        - add(int index,Object o): insert at specific position.
+        - remove(Object o): remove first occurance of element.
+        - remove(int index): remove element at index.
+        - get(int index): return element at index.
+        - set(int index, Object o): replaces the element at index.
+        - size(): size (number of elements).
+        - clear(): removes all elements.
+        - contains(Object o): true if contains element.
+        - indexOf(Object o): returns index of first occurance of element. -1 otherwise.
+
+    -> Queue(LinkedList ,PriorityQueue)
+      - FIFO order
+      - TWO END POINTS: tail(insertion), head(removal)
+      - METHODS:
+        - add(Object o): inserts element. Thrwos exception if element is not added.
+        - offer(Object o): inserts element. returns false if element is not added.
+        - remove(): retrieves and removes the head. Thrwos exception if element is empty.
+        - poll(): retrieves and removes the head. returns null if element is empty.
+        - (): retrieves the head. Thrwos exception if element is empty.
+        - peek(): retrieves the head. returns null if element is empty.
+
+    -> Set(HashSet, LinkedHashSet, TreeSet)
+      - no duplicate, unordered collection, no idndex-based access
+      - TWO END POINTS: tail(insertion), head(removal)
+      - METHODS:
+        - add(Object o): inserts element. returns true if element is added, false otherwise.
+        - remove(Object o): removes the element.
+        - contains(Object o): returns true if element exists.
+        - size(): returns number of elements.
+        - isEmpty(): returns true if set is empty.
+
+    -> Map Interface(HashMap)
+      - part of Collection Framework, but does'nt extend Collection Interface.
+      - stores key-values pairs.
+      - keys are unique(can have only one value), but multiple keys can map to same value.
+      - METHODS:
+        - put(Object key, Object value): assosiates key with value.
+        - get(Object key): return value of key, or null if no value exists.
+        - remove(Object key): removes mapping for a key.
+        - containsKey(Object key): checks if key contains value.
+        - keySet(): returns SET of keys.
+        - values(): returns COLLECTION of values.
+
+-> Collections Class
+  - METHODS:
+    - sorting, binary search, reverse the order of elements in list, suffle, unmodifiableList, singletonList, copy
+
+-> Enums
+  - special type of class
+  - to make fixed sets of constants
+  - definition:
+    enum Enum1 {
+      RED,GREEN,ORANGE;
+    }
+  - usage:
+    Enum1 newEnum;
+    newEnum = Enum1.RED;
+
+-> Generics and Diamond Operator
+  - Generics:
+    - Allow writing reuseable classes by enabling types(classes and Interfaces) to be parameters.
+    - Provide compile time safety
+    - You dont need to cast because type is known
+    - denoted with <> eg. List<Integer>
+  - Diamond Operator:
+    - Allows not writing type in the right side, only <> would instanciate.
+
+-> MULTI-THREADING
+  -> What is Thread: Thread is a small part of program that can run at same time as others parts.
+  -> Making Threads: 
+    - two methods(1. Thread Class 2. Runnable Interface), need to override run().
+  -> Threads Talk: Threads can talk to each other using wait(), notify(), notifyAll()
+  -> States of Threads:
+    - New: Thread is created but not started. [new Thread(t1)]
+    - Runnable: Ready for running. [t1.start()]
+      ⬇️   ⬆️[yield()] 
+    - Running: Thread is executing tasks. [Processor runs the thread]
+    - Waiting/Sleeping/Blocked: Thread is alive but not active, its waiting-for-resources/sleeping/other threads.[wait(), sleep(), suspend()]
+    - Terminated: Thread is finished or stopped running.[dead state]
+  -> Thread Priority:
+    - it just suggests the thread Priority but does'nt gurantee the order of execution.
+    - Priority Levels: 1(lowest:Thread.MIN_PRIORITY) to 10(highest:Thread.MAX_PRIORITY).
+    - Set and Get Priority: setPriority(), getPriority().
+  -> join() Method:
+    - main thread(calling thread), t1-t2-t3(threads called by main thread)
+    - t1.join(): main thread will stop execution at this point and wait for t1 to complete. aftre t1 is completed main thread will start its execution.
+    - Overloaded join():
+      - join(): main will wait indefinitely until t1 completes.
+      - join(long milisec): main will wait for t1 for specified mili seconds.
+      - join(long milisec,int nanosec): main will wait for t1 for specified mili seconds plus nano seconds.
+  -> synchronized KEYWORD:
+    - To achieve Mutual Exclusion.
+    - when t1 enters synchronized block it acquires lock on method(instance method) or class(static method).
+    - Changes on shared data made by one thread are visible to other threads.
+  -> Thread Communication:
+    - Thread.sleep(long milisec): static method. currently executing thread will temporarily cease execution.
+    - yield(): currently executing thread will pause and go to Runnable state. allow other threads to run
+    - wait(): currently executing thread will wait until other thread invokes notify().
+    - notify(): if any threads are waiting one is choosen and brought to Runnable state.
+    - notifyAll(): Wakes up all threads that are waiting on object's monitor.
+
+-> EXECUTOR SERVICE
+  APPLICATION --> THREAD-POOL-EXECUTOR(Task Queue + Thread Pool).
+  -> Its a Framework by JAVA CONCURRENCY API to manage and execute submitted tasks without need to manually manage thread life cycle.
+  -> Working: 
+    - Application: Application makes Runnable objects and passes it to Thread Pool Executor
+    - Thread Pool Management: Runnable objects(Tasks) are then sent into Task Queue. EXECUTOR SERVICE reuses a fixed Pool of Threads to execute tasks.
+  -> service.awaitTermination(10, TimeUnit.SECONDS)
+    - return true if all threads complete tasks before 10 seconds. false if time exceed
+  -> service.shutdown(): will shout down the service when all threads complete all tasks. even if main thread is terminated.
+  -> service.shutdownNow(): will shut down the service immediatelty.
+  -> Future Service:
+    - Callabe Interface: when we expect some results from thread.
+      - Callabe<T>: returns data to calling thread.
+      - Future<T> future: Same as promise.
+      - future.get() : to fetch returned data. Main thread will wait untill value is returned by the called thread(handle Exception)
+
+-> SERIALIZATION & DE-SERIALIZATION
+  -> SERIALIZATION:
+    - Converting an object into byte stream. persists (saves the state) the object after program exits
+    - This byte stream can be saved as file or sent over network.
+    - fileName.ser --> platform independent.
+    - Steps to Follow:
+      - Object class should implement Serializable Interface.
+      - import java.io.Serializable
+      - FileOutputStream fileOut =  new FileOutputStream(filePath)
+      - ObjectOutputStream out =  new ObjectOutputStream(fileOut)
+      - out.writeObject(ObjectName)
+      - out.close()
+      - fileOut.close()
+  -> DE-SERIALIZATION:
+    - Converting byte stream back into object.
+    - Steps to Follow:
+      - Declare the object(don't instanciate).
+      - Object class should implement Serializable Interface.
+      - import java.io.Serializable
+      - FileInputStream fileIn =  new FileInputStream(filePath)
+      - ObjectInputStream in =  new ObjectInputStream(fileIn)
+      - (ClassName) in.readObject()
+      - out.close()
+      - fileOut.close()
+  -> Important Notes:
+    - If parent class implements Serializable then its child will also do so.
+    - static fields are not Serializable(they belong to class, not an individual object).
+    - Fields declared as transient are'nt Serializable, they are ignored.
+    - serialVersionUID is a unique version ID.
+  -> serialVersionUID:
+    - Its a unique ID that function like a version number that verfies that the sender and reciever of Serializable Objects use same classes to load these objects.
+    - If number mismathes InvalidClassException is thrown.
+
+-> Function Programming
+  -> Functional Programming: 
+    - writing code in functions like small building blocks
+    - First Class Functions: function can be passed as arguments, returned from other functions, assinged to variables.
+    - Immutable Data: requirement for Functional Programming, All classes should have final attributes
+    - Pure Functions: these always give same result for same input
+    - No Side-Effects: don't effect outside data
+    - Lazy Evaluation: 
+    - Functional Interfaces: these are templates for function.
+  -> LAMBDA Expression: 
+    - nameless functions
+    - Lambda Function can be applied to those interfaces only which have signle abstract method(Functional Interfaces).
+    - Syntax:
+      (parameters) -> {Body}
+  -> Streams: 
+    SOURCE(ARRAY/COLLECTION) ---> STREAM ---> Intermediate Operations ---> Terminal Operation ---> OPERATION RESULT.
+    - Sequence of Elements.
+    - Functional Operations(Map, Filter, Reduce) can be applied to streams.
+    - Streams don't store data. they process it on the fly from source(Array/Collection).
+    - One Time Use: Streams are consumable; once processed, they cannot be used.
+    - Support Parallel Processing(make your data immutable)
+    - Stream Operations can be lazy(Processing elements only when needed; jab tk final result ko koi use ni krta tb tk stream mai data ka flow start hi ni ho ga)
+  -> Filter: 
+    - To FILTER ELEMENTS of a stream based on a condition
+    - LAZY OPERATION: Filter will not execute untill a Terminal Operation(collect/forEach...) is invoked
+    - Returns a stream.
+  -> Reduce : 
+    - To FILTER ELEMENTS of a stream based on a condition
+    - LAZY OPERATION: Filter will not execute untill a Terminal Operation(collect/forEach...) is invoked
+    - Returns a stream.
