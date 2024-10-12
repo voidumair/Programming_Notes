@@ -1,0 +1,183 @@
+------------------ NEXT ------------------
+npx create-next-app@latest
+------------------------------------------
+
+01. Folder Sturcture
+    - public (for static assets)
+    - src/app (all pages and routes are here)
+      layout.js (root layout. renders page.js)
+      page.js (file that is rendered)
+      global.css (for global styling)
+      next.config.mjs (for writing configures)
+
+02. Server and Client Components
+    -> Server Components
+      - by default all the Components are Server Components.
+      - Purpose: to fetch data from server side
+    -> Client Components
+      - 'use client'
+      - for interactivity, state management
+      - to use React Hooks we need Client Components
+
+03. page.js
+    -> index route --> index.js in older versions 
+    -> every page.js is a route (root level, nested or dynamic) 
+      - src/app/page.js (root level route "/")
+      - src/app/products/page.js ("/products")
+      - Nested Route
+        src/app/products
+            |_> page.js
+            |_> /shoes/page.js ("/products/shoes")
+      - Dynamic Route
+        src/app/products
+            |_> page.js
+            |_> /[product-details]/page.js ("/products/anyShoes")
+      - Catch-all Route
+        src/app/products
+            |_> page.js
+            |_> /[...product-details]/page.js ("/products/anyShoes/anyCompany/anyThing")
+
+04. Routing and Navigation
+    -> import Link from "next/link";
+      - href={'route'} OR href={'/route'}
+      - can be used in both Server Components and Client Components
+    -> import { redirect } from "next/navigation";
+      - redirect("/")
+      - can be used in both Server Components and Client Components
+    -> import { useRouter } from "next/navigation";
+      - can be used in Client Components only
+        const router = useRouter();
+        router.push("profile")
+
+05. usePathname, useParams and useSearchParams
+    -> Path Name
+      - usePathname: to extract path of current route in client components
+      - request.nextUrl.pathname: to extract path of current route in server components
+    -> Query Parameters
+      - useSearchParams: to extract the query parameters from route (searchParams.get("value"))
+      - {searchParams} prop: to extract the query parameters from route in Server Component (searchParams.value)
+    -> Dynamic Route
+      - useParams: to extract the name of dynamic route and catch-all route (const {new-route} = router.query)
+      - {params} prop: to extract the dynamic route and catch-all route in Server Component (params.routeName)
+
+06. Loading UI and Custome 404 page
+    -> Loaing UI
+      - create loading.js
+      - in layout.js
+        - wrap children in Suspense
+          return (
+            <html lang="en">
+            <body>
+              <Suspense fallback={<loading/>}>{children}</Suspense>
+            </body>
+          </html>
+          );
+    -> Custom 404 page
+      - create not-found.js
+    create both files inside app folder
+
+07. Data Fetching
+    -> in Server Components
+      - fetch api
+      - Next will render data fetched from api for the first time and next time it will automatically cache the data and will render data from chache
+      - chache: default(force-store) no-store(will not cache api results)
+        fetch("url",{cache:"default"})
+
+08. Api Routes
+    -> inside app folder:
+      - create folder (api)
+      - inside api:
+        - create required route folder
+          - create route.js
+
+09. Server Action
+    -> inside Component:
+      - for server side components only
+    -> Seperate File:
+      - for server and client side components
+
+10. Middlewares
+    -> create middleware.js 
+    -> write logic
+    -> this middleware will run on all paths
+
+    -> Matcher : allows you to filter middleware to run on specific path
+      - in middleware.js
+          export const config = {
+            matcher: ["/sign-up"],
+          };
+      - middleware will run for /sign-up only
+
+11. Auth JS / Next Auth
+    -> npm install next-auth@beta
+    -> npx auth secret
+    -> create .env.local and paste the secret as AUTH_SECRET
+    -> create /src/auth.js and add this content:
+        import NextAuth from "next-auth"
+        
+        export const { handlers, signIn, signOut, auth } = NextAuth({
+          providers: [],
+        })
+    -> Add a Route Handler in /app/api/auth/[...nextauth]/route.js
+        import { handlers } from "@/auth" // Referring to the auth.ts we just created
+        export const { GET, POST } = handlers
+    -> Add optional Middleware in /src/middleware.js
+        export { auth as middleware } from "@/auth"
+    -> Setup Authentication Methods (OAuth, Magic Links, WebAuthn)
+
+
+      
+000. Blog App Project
+    -> connect to database (src/database)
+    -> create models (src/models)
+    -> create api routes [add, get/fetch, update, delete] (app/api)
+    -> implement joi validation on data coming from req.json() in the route
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

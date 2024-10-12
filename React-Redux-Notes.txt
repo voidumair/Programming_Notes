@@ -283,43 +283,51 @@ Things to rememeber
     
     -> REDUX TOOLKIT
         -> npm i redux @reduxjs/toolkit
-        -> create "Store" folder with "index.js" file
-        -> inside "index.js"
-            -> import {configureStore} from "@reduxjs/toolkit"
-            -> Create Slices: 
-                    const counterSlice = createSlice({
-                        name : "counter",
-                        intialState : {counterVal:0},
-                        reducers:{
-                            add:(state,actions)=>{
+        -> create "Store" folder.
+        -> Create Slices folder and inside newSlice.js:
+                import { createSlice } from "@reduxjs/toolkit";
+                const counterSlice = createSlice({
+                    name : "counter",
+                    intialState : {counterVal:0},
+                    reducers:{
+                        add:(state,actions)=>{
 
-                            }
-                            .
-                            .
-                            .
-                            smallReducerMethods : (state,actions)=>{
-                            }
                         }
-                    })
-            -> Configure Store: combines Multiple reducers 
+                        .
+                        .
+                        .
+                        smallReducerMethods : (state,actions)=>{
+                        }
+                    }
+                })
+                export const {add} = counterSlice.actions
+                export default counterSlice.reducer
+
+        -> inside "index.js"
+                import {configureStore} from "@reduxjs/toolkit"
+            - Configure Store: combines Multiple reducers 
                     const store = configureStore({
                         reducer:{
-                            counter : counterSlice.reducer
+                            counter : counterSlice
                         }
                     })       
-            -> export const counterActions = counterSlice.actions
-            -> export default store
+                    export default store
+
         -> Provide store to react
-            -> import {Provider} from "react-redux"
-            -> <Provider store={store}> <App/> </Provider>
+                import {Provider} from "react-redux"
+                <Provider store={store}> <App/> </Provider>
+
         -> Using the slices of store
-            -> import {useSelector} from "react-redux"
             -> useSelector() HOOK gets a slice of the store.
-            -> const {counterVal} = useSelector(store => store.counter)
+                import {useSelector} from "react-redux"
+                const {counterVal} = useSelector(store => store.counter)
+
         -> Subscription
             -> already setup and autometically cleared also. Re-execute only when your slice is changed 
+
         -> Dispatch
             -> actions can be dispatched using dispatch(allAction.reducerMethod(payload))
-            -> counterActions.add({ num: 5 })
-            -> counterActions.add(5)
+                counterActions.add({ num: 5 })
+                OR
+                counterActions.add(5)
             
