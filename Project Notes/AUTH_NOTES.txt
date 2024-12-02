@@ -1,0 +1,70 @@
+npm i express cookie-parser mailtrap bcryptjs dotenv jsonwebtoken mongoose crypto
+
+-> backend:
+  - mailtrap configuration (backend/mailtrap/)
+
+-> frontend:
+  - Routing(react-router-dom)
+    - in main.jsx
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+    - in App.jsx
+        <Routes>
+          <Route path="/" element={"Home"} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/verify-email" element={<EmailVerificationPage />} />
+        </Routes>
+  - Store(zustand)
+    - in store/authStore.js
+        import { create } from "zustand";
+        import axios from "axios";
+
+        const API_URL = "http://localhost:5000/api/auth";
+        export const useAuthStore = create((set) => ({
+          user: null,
+          isAthenticated: false,
+          error: null,
+          isLoading: false,
+          isCheckingAuth: true,
+
+          signup: async (email, name, password) => {
+            set({ isLoading: true, error: null });
+            try {
+              const response = await axios.post(`${API_URL}/signup`, {
+                email,
+                password,
+                name,
+              });
+              set({ user: response.data.user, isAthenticated: true, isLoading: false });
+            } catch (error) {
+              set({ isLoading: false, error: error.response.data.message || "Error singing up" });
+              throw error;
+            }
+          },
+        }));
+    - in AnyFile.jsx
+        import { useAuthStore } from "../store/authStore";
+
+        const { signup, error, isLoading } = useAuthStore();
+      
+-> production:
+  - in MERNAuth/package.json
+      "scripts": {
+        "dev": "SET NODE_ENV=development&&nodemon backend/index.js",
+        "start": "SET NODE_ENV=production&&node backend/index.js",
+        "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+      },
+  - in MERNAuth/backend/index.js
+      const __dirname = path.resolve();
+
+      if (process.env.NODE_ENV === "production") {
+        // make frontend folder as static asset in production
+        app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+        // all other routes (other than /api/auth) should be rendered by React
+        app.get("*", (req, res) => {
+          res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+        });
+      }

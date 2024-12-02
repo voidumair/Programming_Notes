@@ -99,8 +99,7 @@ Lec# 04
                         -> git push -u origin master
                   -> Collaborator
                         Collaborator has to fetch the new code and merge
-                        -> git switch master
-                        -> git pull (code will b fetch and merge the code as well)
+                        -> git pull origin main(code will b fetch and merge the code as well)
                         
 
 

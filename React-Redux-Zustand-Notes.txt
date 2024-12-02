@@ -330,4 +330,37 @@ Things to rememeber
                 counterActions.add({ num: 5 })
                 OR
                 counterActions.add(5)
+
+- Store(zustand)
+    - in store/authStore.js
+        import { create } from "zustand";
+        import axios from "axios";
+
+        const API_URL = "http://localhost:5000/api/auth";
+        export const useAuthStore = create((set) => ({
+          user: null,
+          isAthenticated: false,
+          error: null,
+          isLoading: false,
+          isCheckingAuth: true,
+
+          signup: async (email, name, password) => {
+            set({ isLoading: true, error: null });
+            try {
+              const response = await axios.post(`${API_URL}/signup`, {
+                email,
+                password,
+                name,
+              });
+              set({ user: response.data.user, isAthenticated: true, isLoading: false });
+            } catch (error) {
+              set({ isLoading: false, error: error.response.data.message || "Error singing up" });
+              throw error;
+            }
+          },
+        }));
+    - in AnyFile.jsx
+        import { useAuthStore } from "../store/authStore";
+
+        const { signup, error, isLoading } = useAuthStore();
             
