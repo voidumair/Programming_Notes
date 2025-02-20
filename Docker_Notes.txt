@@ -1,0 +1,85 @@
+-------- DOCKER NOTES --------
+
+1. Image and Container
+  -> Container: Container is like machine(hardware)
+  -> Image: Image is like OS running on Container(machine)
+  -> One Image can be run on multiple Containers
+
+2. Important Commands
+  - Pulling The Image from Docker Hub: docker pull <image-name>
+
+  - Listing all Images: docker images
+
+  - Running the Image inside a Container: docker run -h "Kali" -it <image-name/id> <command-OPTIONAL>
+      |-> this will spin up a new container and run the image inside it
+      |-> <command-OPTIONAL>: if the command is not given, the default command of the image will be run
+  
+  - Listing running Containers: docker container ls OR docker ps
+  
+  - Listing all Containers: docker container ls OR docker ps -a
+  
+  - Start Container: docker start <container-name/id>
+  
+  - Stop Container: docker stop <container-name/id>
+  
+  - Execute any command inside running Container: docker exec <container-name/id> <command>
+  
+  - Connect the terminal with container: docker exec -it <container-name/id> bash
+      |-> -it: means (intractive-tty). this will connect the terminal with the terminal inside container and dont disconnect
+      |-> bash: means run the bash command which will open up the bash (terminal) inside the container. (commands "bash" and "/bin/bash" are identical)
+
+3. Port Mapping
+  -> We can expose the ports of container to use them outside of container
+  
+  - docker run -it -p 6000:3000 <image-name/id> (a new container is created)
+      |-> -p 3000:3000 : means map the port 3000 of container with the port 6000 of my machine
+
+4. Environment Variables
+ - docker run -it -e key=value <image-name/id>
+
+5. Dockerization
+ - make a file named "Dokerfile" in your project
+ - choose base image
+ - write your configrations and entrypoint etc.
+ - docker build -t <image-tag> .
+ - create a repository on docker Hub
+ - docker push <image-name>
+
+6. Docker Compose
+ - make a file named "docker-compose.yml" in your project
+ - write version
+ - write services and other configrations for that services (PORT, ENV, etc)
+ - docker compose up (the services will start running)
+ - docker compose down (the services will stop running)
+
+7. Docker Networking
+ -> Network Types: 
+    - Bridge (Default): we need to expose the ports as each container acceses netwrok through a bridge (a bridge netwrok that connects host with containers)
+    - Host (docker run --network=host): no need to expose the ports as coantainer use the Host's network
+    - none (docker run --network=none): no access to network
+
+ - Inspect Network: docker network inspect bridge
+ - List Available Networks: docker network ls
+ - Create Custom Network: docker network create -d <driver(bridge/host)> <netwrok-name>
+
+8. Volume Mouting
+  - docker run -it -v <folder-address-in-host>:<folder-address-in-container> <image-name>
+  - This will mount the folder of host machine with the folder inside container, so that any changes made in either of folders will be available to both folders
+
+9. Related to Dockerfile
+  -> we can set a Working Directory so that layers below that run inside that Directory: WORKDIR /app
+  -> Copy everthing from source dir to destination dir: COPY . .
+  -> Multistage builds:
+      FROM ubuntu as build
+      .
+      .
+      OTHER LAYERS
+
+      FROM node as runner
+      .
+      WORKDIR app/
+      COPY --from=build app/ . 
+      OTHER LAYERS
+      .
+      .
+      ENTRYPOINT ["node","main.js"]
