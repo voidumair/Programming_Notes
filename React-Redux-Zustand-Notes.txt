@@ -282,13 +282,13 @@ Things to rememeber
             -> dispatch actions using useDispatch() HOOK.
     
     -> REDUX TOOLKIT
-        -> npm i redux @reduxjs/toolkit
+        -> npm i redux react-redux @reduxjs/toolkit
         -> create "Store" folder.
         -> Create Slices folder and inside newSlice.js:
                 import { createSlice } from "@reduxjs/toolkit";
                 const counterSlice = createSlice({
                     name : "counter",
-                    intialState : {counterVal:0},
+                    initialState : {counterVal:0},
                     reducers:{
                         add:(state,actions)=>{
 
