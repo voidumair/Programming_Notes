@@ -1,0 +1,96 @@
+ ----------------- Python -----------------
+
+-> type()
+  - type(varaible/obj)
+  - types: <class int> <class float> <class str> <class tuple>
+
+-> Type Casting
+  - int(variable)
+
+-> String
+  - immutable
+  - "Single Line String" 
+  - 'Single Line String' 
+  - '''
+    Multi Line
+    String
+    '''
+  - Slicing:
+    - str1 = "StringExample"
+    - len(str1) : lenngth of the string.
+    - str2 = str1[0:3] --> "Str"
+        - positive slicing : first index should be < second
+        - start from 0 index. till 3-1 (first index included:2nd index not included).
+    - str2 = str1[:3] -- str1[0:3]
+    - str2 = str1[1:] -- str1[1:len(str1)-1]
+    - negative indexes : indexes are counted backwards (from -1 to -n)
+    - str2 = str1[-4:-1] --> "mpl"
+        - negative slicing : first index should be > second
+        - convert in str1[1:4] -- string will be selected from 1 to 4-1
+    - str2 = str1[-4:] -- str1[0:4]
+  - Slicing with skip value:
+    - str3 = str1[1:5:2]
+      -- str1[1:5] --> "trin"
+      -- str1[1:5:2] --> "ti"
+  - f-String:
+    - print(f"helllo {variable}")
+  - String Methods:
+    - they dont change original string, return new string
+    - they are many. google them
+
+-> List
+  - like array
+  - mutable
+  - to store values of any datatype
+  - Example
+    arr1 = ["string1",5,False,0.01]
+  - list slicing: same as string slicing
+  - String Methods:
+    - they change original list
+    - Examples
+      arr1.append("Insert at end")
+      arr1.reverse() : reverse the array
+      arr1.sort() : sort array
+      arr1.insert(1,"newEntry") : sort array
+      arr1.pop() : pops element from last
+      arr1.pop(2) : pops element from 2nd index 
+      arr1.remove() : removes "newEntry" from list
+
+-> Tuple
+  - immutable
+  - Example
+    a = (5,False,"string")
+    a = (5,) : single element
+  - Tuple Slicing: same as others
+  - Tuple unpacking: x,b,c = a
+  - Tuple Methods:
+  - Examples
+    a.count(5) : counts how many times 5 occurs
+    a.index(5) : index of first occurance 
+
+-> Tuple
+  - 
+  - Example
+     
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+

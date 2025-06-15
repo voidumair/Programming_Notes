@@ -1,0 +1,462 @@
+-------------> Typescript <-------------
+
+1. Install Globally: npm i typescript -g
+
+2. Setting up TS Project
+  -> app.ts
+  -> configure tsconfig.json file (for rules) --> tsc --init
+  -> compile the code (typescript compiler will compile the code and generate app.js anyway even if file contains error)
+    - tsc app.ts || tsc
+    - tsc --watch (autometucally compiles code on every saved change in app.ts )
+
+2. Basic Data Types
+  -> Premitives
+    - Number(integer, float), Character, String, Boolean
+  -> Refrences
+    - [], {}, ()
+    - Array: [] 
+    - Object: {} 
+    - Tuples: arraay with fixed size and positions of elements 
+        let arr : [string,number] = ["umair",2] 
+    - Enums
+        enum UserRoles{
+          ADMIN = "admin",
+          GUEST = "guest",
+          STUDENT = "student"
+        }
+
+3. Understanding Types
+    let a: number;
+    a = 12;
+    (a will store data of number only, error otherwise)
+    - any:
+        let a;
+    (a can store any value, make sure to avoid this type for all variables)
+    - unknown:
+        let a:unknown;
+    (a can store any value but now we must have to put validation to check for type specific functions - type narrowing)
+        if (typeof a === "string") a.toUpperCase()
+    - void:
+        let a:void;
+        function abcd(): void {}
+    - null:
+        let a: null;
+    (a can have only null value)
+    - undefined:
+        let a: undefined;
+    (a have no value yet)
+    - never:
+        function abcd(): never {
+          while(true){}
+        }
+    (funtion will never return the control)
+
+4. Type Infrence and Annotation
+  -> Infrence: varibale value dekh kr ts khud pta kr le k type konsi hai (let a= 12)
+  -> Annotation: Variable k agay colon lagga k type btana (let a:number | string | boolean = 12)
+
+5. Interfaces
+  -> Interface: tells the shape of an object
+  -> two Interfaces with same name are merged
+
+      Interface User{
+        name: string,
+        email:string,
+        password:string
+      }
+
+      - the values defined in User must be given when User Object is passed
+      function abcd(obj:User){}
+
+      abcd({}) // error, name email password missing
+      abcd({name:"Umair"}) // error, email password missing
+      abcd({name:"Umair",email:"umair123@gmail.com",password:"11123"}) // ok
+      abcd({name:"Umair",email:"umair123@gmail.com",password:"11123",,some:123}) // error, extra field given that is not defined.
+
+      - put ? to make some fields optional, no error if they are'nt given
+          Interface User{
+            name: string,
+            email: string,
+            password: string,
+            age?: number
+          }
+  
+  -> Extending Interface:
+      Interface User{
+        name: string,
+        email:string,
+        password:string
+      }
+      Interface Admin extends User{
+        isAdmin: boolean,
+      }
+      
+6. Type Aliases
+  -> Type Alias: tells the type 
+  -> two Types with same name are not merged
+
+      type value = number | string | boolean;
+      let a: value;
+
+  -> Intersection Types
+   - union(|): 
+        let a: string | null;
+   - union(&): 
+        interface User {
+          name: string;
+          email: string;
+          password: string;
+        }
+
+        type Admin = User & { greeting: string };
+
+        function abd(obj: Admin) {}
+        abd({ name: "umair", email: "u@gmail.com", password: "123", greeting: "hey" });
+
+7. Difference between Infrence & Type Aliases
+  -> Type Alias: 
+    - two Types with same name are not merged, error
+    - types are used to merge (union,intersection) of data types
+  -> Interface: 
+    - two Interface with same name are merged
+    - used to tell the shape of an object. what will it contain, etc.
+
+8. Classes and Objects
+  -> : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
