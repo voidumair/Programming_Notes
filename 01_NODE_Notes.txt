@@ -1,0 +1,509 @@
+# NODE NOTES
+
+## Section 01
+  (Lec. 01). Why Node
+    -> JS runtime built on Google's V8 JS Engine.
+    -> Node is Single Threaded based on Event Driven, Non-Blocking I/O Model.
+
+  (02). Node REPL
+    -> type "node" inside terminal to use NODE in termeinal to run JS
+    -> hit tab button (maybe twice) to see all the global variables available in node
+    -> underscore "_" stores previous result of the calculation in node (2+3 -> _+4 --> 9)
+
+## Section 02
+  (03). Using any module
+    -> const fs = require("fs") 
+      - require("fs"): this will return an object which contains lots of functions 
+      - const fs = require("fs"): storing this object into fs variable
+
+  (04). Node Docs (https://nodejs.org/docs/latest/api/)
+
+  (7,8). Asynchronous Nature(Blocking and Non-Blocking)
+    -> Synchronous(Blocking Code): Each statement is run one after another line by line. Each line BLOCKS the execution of the rest of the code.
+    -> Asynchronous(Non-Blocking Code): Heavy work is done in background and once its done, a callback function is called to handle the result.
+    -> Why Asynchronous:
+      - Node.js is single threaded, so a Node.js process (which is where our application is running) has a single thread (each application has one thread only).
+      - Which means all the users accesing your application are accessing the same thread.
+      - So if one user blocks the single thread using Blocking code then all the other users have to wait.
+    -> How Asynchronous works:
+      - 
+
+  (9,10). Reading and writing files
+    -> const fs = require("fs") 
+    -> Synchronous version of file reading function
+          const inText = fs.readFileSync("./txt/input.txt", "utf-8");
+    -> Synchronous version of file writing function
+          fs.writeFileSync("./txt/output.txt", "outText","utf-8");
+    -> Asynchronous version of file reading function
+          fs.readFile("./txt/input.txt", "utf-8", (err, data) => {
+            if (err) return console.log("Error reading file:", err);
+            console.log(data);
+          });
+    -> Asynchronous version of file writing function
+          fs.writeFile("./txt/final.txt", `${data2}\n${data3}`, "utf-8", (err) => {
+            if (err) return console.log("Error reading file:", err);
+            console.log("Written to final.txt");
+          });
+
+  (11). Creating a simple Web-Server (http)
+    -> const http = require("http") -> built in package that provides netwroking capabilities (building web servers)
+    -> Two Steps:
+      - Create Web Server:
+          const server = http.createServer((req, res) => {
+            res.end("Hello From Server");
+          });
+          - the callback inside createServer() gets fired off each time a news client requests.
+          - req: holds all the information about url (req. url, etc).
+          - res: holds all the tools to deal with sending responses.
+          - Headers: HTTP Header is a piece of information about the request/response.
+          - res.writeHead(404,{}): to send headers, we need to specify an object in which we can put the headers, first param must be a status code, headers and status code must be sent before we send our response.
+          - res.write(): Simplest method to send back simplest response in peices (chunks). Its a writable stream function because res is writable stream.
+          - res.end(): Simplest method to send back simplest response. Its a writable stream function because res is writable stream. end() also signals that no more data will be written to this writable stream. Using this function, no streaming happens as all the data will be sent in one peice.
+      - Start Web Server (listen to incoming requests):
+          server.listen(port,host,()=>{})
+          - host: optional,default to localhost('127.0.0.1')
+          - callback: optional, runs right after server start listening 
+          - event-loop: keeps the app running, when a new client hits the url the event is called which runs the callback inside createServer(). 
+
+  (12). Routing (using http)
+    -> Implementing different actions for different URLs.
+    -> req.url: Browser automatically makes request for favicon.ico each time with client's request. So two req each time(callback executes twice).
+    -> For simple URLs we can use req.url, but for complex routes (query,dynamic params) we will use built "url" package
+      - const url = require("url")
+
+  (13). What is an API
+    -> Simple Def: An API is service from which we can request some data.
+    -> __dirname: this variable always translates to the directory in which the script that we are currently executing is located (where the current file is located).
+    -> JSON.parse: takes the json code (which is actually a string) and converts it into JS Object/Array
+
+  (13-15). Templates (using http)
+    -> Placeholders: to dynamically render data of json file inside html tags, we can define any type of placeholder eg. {%PRODUCTNAME%}
+    -> in index.js: read the data.json, parse it, and loop the paresed array and replace the palceholder with actual data
+
+  (16). Parsing variables from URLs (using url)
+    -> const url = require("url")
+    -> url.parse(req.url,true): gives variables(query params) from url. "true" is used to parse the query into an object.
+
+  (17). Using our own modules
+    -> In node every file is treated as module.
+    -> to export a module: 
+        module.exports = something
+    -> to import a module: 
+        const something = require("something")
+  
+  (18). NPM
+    -> NPM: CLI application (comes with nodejs) use to install and manage open source packages (like express, react, etc.) available at npm-repository (https://npmjs.com)
+    -> npm init: starts the project and creates a package.json (configuration file of the project)
+
+  (19). Types of packages and installs
+    -> 2 types of packages: 
+      - Simple/Regular dependencies: packages that contain code that we will include in our own code to work our application correctly (eg. express) [npm install express]
+      - Development dependencies: they are not needed for production, we use them to develop our application (tools for development), our code doesn't depend on them [npm install nodemon --save-dev]
+    -> 2 types of installs: 
+      - Local Installs: Available only in project. To run the locally installed dependencies using terminal we need to specify the command in scripts [npm run script-name].
+      - Global Installs: Available everywhere [npm install nodemon --global] 
+    -> Impoting 3rd party modules: 
+      - const slugify = require("slugify") 
+
+  (20). Versioning, updating and deleting packages 
+    -> Versioning:
+      - Version Numbers: Three numbers seprated by dot.      (eg. "slugify": "^1.6.6").
+      - 1st number: major version (for huge new release, that have breaking changes, might break previous chnages, might effect the code if not updated)
+      - 2nd number: minor version (introduces some new features into the packages, not big changes, always backward compatible)
+      - 3rd number: patch version (intended to fix the bugs)
+    -> Updating:
+      - npm i slugify@1.0.0: to intall specific version
+      - npm outdated: to check outdated packages
+      - npm update slugify: will update the package according to the symbole (^ or ~ or *).
+      - The symbols (^ or ~ or *): these symbols specify which updates we accept for each of the packages
+      - default (^): means that we accept the patch and minor changes.
+      - (~): we only accept the patch releases.
+      - (*): we accept all versions.
+    -> Deleting:
+      - npm uninstall slugify: deleted from node_modules and removed the entry from package.json
+    -> package-lock.json:
+      - lists all the versions of all the packages that we are using, including dependencies of dependencies.
+
+## Section 03  
+  (25). How web works
+    -> Request-Response-Model / Client-Server-Architecture
+      - When user want some website/resources, the Browser(Client) sends a request to the Server where the website is hosted.
+      - Server then sends back the response containing the webpage/resources back to the Client
+    -> Request: https://www.google.com/maps
+      - http / https
+        . Its a protocol(set of rules) that will be used on the connection. https is encrypted using TLS/SSL
+      - google.com
+        . Easy to rememebr name of the server, gets translated to IP of the Server using DNS before sending the request to Server.
+      - port number
+        . specific service running on the server
+      - tcp/ip socket connection 
+        . once we have the real address, a tcp socket connection is established between client and server (kept alive for the time it takes to send files)
+      - tcp / ip 
+        . communication protocols that decide how data will travel accross the web.
+      - making request
+        . after the connection is established, a http request is made (http is communication protocol that allows client and server to communicate by sending requests and responses).
+      - what request message contains
+        . start line: contains request method(GET/POST etc.), request target(resources requested eg. /maps),http version(HTTP/1.1).
+        . request headers: information that we send about the request itself (Host,type of Browser and many more). We can't make request headers
+        . request body (if we are sending data to the server)
+    -> Response: https://www.google.com/maps
+      - http / https response contains:
+        . start line: http version(HTTP/1.1), status code (eg. 200 OK)
+        . response headers: information about the response. We can make our own response headers and send them back as response.
+        . request body (present in most of the responses): We send back the body in response, contains HTML of the requested website OR json data (response.end()).
+    -> How does req/res data sent accross the web
+      - TCP/IP: these protocols define how the data will travels accross the web
+      - TCP: Job of TCP is to break the data into packets before sending.
+      
+  (26). HTTP in action
+    -> Dev Tools in Chrome
+      - Network Tab (disable cache) : we cab see all the requests happening
+        . for signle udemy.com we are making lot of requests (first for udemy.com and others are for resources like css and js and image files) 
+      
+  (27). Frontend vs Backend
+    -> Think of the Client Server Model
+    -> Frontend: Its about everything that happens on the we browser (HTML, CSS, JS).
+    -> Backtend: Its about everything that happens on the we server.
+      - Server: Its just a computer connected to the internet, which stores website files(HTML, CSS, JS, Images) and runs the HTTP server that understands requests and handle responses, this http server communicates with the browser (http server is bridge between Frontend and Backend).
+    -> Static Server: Serves static files to the client.
+    -> Dynamic Server: That also talk to databases, and handles a lot of logic.
+      
+  (28). Static vs Dynamic vs API
+    -> Static Website: When developer uploads the final files of a website onto the web server (HTML, CSS, JS, Images, etc). The server sends these files to browser. Browser render these files as they are.
+    -> Dynamic Website: They are built on server each time a new request comes in. There's a database, a node app fetches data from database, and builds requested pages using predefined templates dynamically based on the data from database. Then the built pages are sent to browser. (SSR - Server Side Rendering).
+    -> API: Just like Dynamic Website there's a database, a node app fetches data from database, and sends this data(JSON) to the browser. Browser takes this data and plugs the data into some templates (built using react,angular etc.). Here building phase of the website moved from Backend to Frontend (CSR - Client Side Rendering). (API - Application Programming Interface: Its a peice of software that can be used by another peice of software to allow applications to talk to each other).
+    
+## Section 04 
+  (30). Node, V8, Libuv and C++
+    -> Node Architecture:
+      - Node runtime has sevral dependencies and important ones are:
+        . V8 (JS and C++): V8 converts JS code into machine code.
+        . Libuv (C++): Open Source Library with a strong focus on Asynchronous I/O. This layer gives Node access to OS, File System, Netwroking and more. Also Implementes Event Loop and Thread Pool.
+          . Event Pool: Handles easy tasks like executing callbacks and netwrok I/O.
+          . Thread Pool: Handles heavy work eg. file access, file compression, etc.
+        . http-parser: For parsing http.
+        . c-ares: For DNS related stuff.
+        . OpenSSL: For cryptography.
+        . zlib: For compression.
+
+  (31). Processes, Threads and Thread Pool
+    -> Node.js Process: Instance of a program in execution on a computer, Node.js is basically a C++ Program.
+      - We have the access to a process variable.
+    -> Single Thread: In this Process Node.js is running in a single thread, so its easy to block Node application.
+    -> When we start the node application:
+      - Intialize Program
+        ▽
+      - Execute "Top Level" Code (Code that is not inside any callback)
+        ▽
+      - Require Modules
+        ▽
+      - Register Event Callbacks
+        ▽
+      - Start Event Loop.
+    -> Event Loop is where most of the work is done in your app, but some tasks are too heavy to be executed in event loop as they would block the thread, these tasks are executed in Thread Pool.
+    -> Thread Pool: Thread Pool gives 04 or more (upto 128) additional threads that are compeletly seprate from main thread. Event loop can automatically offload heavy tasks to the thread pool.
+      - Heavy Tasks: File Systems APIs, Cryptography, Compression, DNS Lookups.
+    
+  (32). Event Loop
+    -> Heart of Node.js Architecture and handles all the Asynchronous code.
+    -> NODE PROCESS [SINGLE THREAD {EVENT LOOP}].
+    -> All the application code that is inside callback functions(non-top level code) is executed inside event loop.
+    -> Some parts might get offloaded to thread pool.
+    -> As Node is all built around callback functions, it works this way because Node.js uses an Event-Driven Architecture:
+      . Events are emitted
+      . Event Loop picks them up
+      . Callbacks are called
+    -> ORCHESTRATION: Event loop does ORCHESTRATION - It recieves events, calls their callback functions and offloaded expensive tasks to thread pool.
+    -> How this all happens:
+      - Start the node app
+        ▽
+      - Event loop starts right away. Event Loop has multiple phases, each phase has Callback Queues(Callbacks coming from the events). Event Loop executes callbacks one by one in each queue (only that are ready to be executed), and only then the event loop will enter the next phase.
+        . 1st Phase: Takes care of the callbacks of expired timers(setTimeOut)
+        . 2nd Phase: I/O polling(looking for new I/O events) and execution of I/O callbacks (netwroking and file access related tasks are kept here, means most of the code get executed here)
+        . 3rd Phase: Set-immediate callbacks(special type of timer that we want to process callbacks immediately after phase 2)
+        . 4th Phase: Close callbacks (Close events eg. when web-server or web-socket shuts down)
+        . Other Queues: 5th (PROCESS.NEXTTICK() QUEUE), 6th (OTHER MICROTASKS QUEUE) --> these are for resolved promises. If there are any callbacks from one of these two queues, they will be processed right after the current phase, instead of waiting for the entire loop to finish. process.nextTick() is a function that we use when we really need to execute a callback right after the current phase.
+        ▽
+        - The event loop waits for stuff to happen in Poll Phase (I/O Polling - inside 2nd phase). When the queue of callback inside 2nd phase is empty, then the event loop will wait in this phase untill there is an expired timer. But if we scheduled a callback using setImmediate, then that callback we be executed right after poll phase, even before expired timers.
+        - If there are not any pending timers or I/O tasks, Node will exit the app. So when are listening to http requests we are running a I/O task, thats why event loop keep running.
+    -> Tips for not blocking the event loop:
+      - Don't use SYNC versions of functions in "fs","crypto" and "zlib" modules in your callback functions.
+      - Don't perform complex calculations (eg. loops inside loops).
+      - Be careful with JSON with large objects.
+      - Don't use too complex regular expressions (eg. nested quantifiers).
+
+  (33). Event Loop and Thread Pool in action.
+    -> See (2-how-node-works/event-loop.js)
+    -> process.env.UV_THREADPOOL_SIZE: to change the number of threads in thread pool.
+
+  (34-35). Events and Event Driven Architecture
+    -> See (2-how-node-works/events.js)
+    -> Most of Node's core modules (eg, http, fs, timers) are built around an event driven architecture.
+      - There are certain objects called EventEmitters that emit named events as soon as something important happens (eg. request hitting the server, timer expiring, file finished reading, etc).
+        ▽
+      - These events are then picked up by Event Listeners (we set up event listeners).
+        ▽
+      - These Event Listeners fire off callback functions that are attached to each Listener.
+    -> Event Emitter  --->  Event Listener
+    EXAMPLE:
+    -> server.on: event listener.
+    -> "request": event name.
+    -> When a new request is made, the server acts as an emitter and will automatically emit an event ("request") each time a request hits server. Since we already have a listener set up, the callback funtion attached to this listener will automatically be called.
+    -> The "server" is actually an instance of Node's EventEmitter Class (const server = http.createServer()).
+    -> This Event Listener logic is called the Observer Pattern in JS.
+      - Observer Pattern: There is an observer (event listener) which keeps waiting and observing the subject to emit the event.
+    
+  (36-37). Streams
+    -> See (2-how-node-works/streams.js)
+    -> Used to process (read/write) data peice by peice (chunks), without completing the whole read/write operation, and without keeping all the data in memory.
+    -> Perfect for handeling large vlolumes of data (eg.videos). More efficient data processing in terms of memory.
+    -> Streams are everywhere in core Node modules. 
+    -> Streams are instances of EventEmitter Class, they can emit or listen to named events as well. 
+    -> In Node there are 4 types of Streams:
+      - Readable Streams: Streams from which we can read (consume) data.
+        . Events (data:- when there is new data to consume. end:- when there is no more data to consume).
+        . Functions (pipe():- allows to plug streams together, passing data from one stream to other. read()).
+        . Example: The data that comes in http request is actually a Readable Stream. fs read streams.
+      - Writable Streams: Streams to which we can write data.
+        . Events (drain, finish).
+        . Functions (write(), end()).
+        . Example: http response. fs write streams.
+      - Duplex Streams: Streams that are both readable and writable.
+        . Example: net web socket.
+      - Transform Streams: Duplex Streams that transform data as it written or read.
+        . Example: zlib Gzip creation.
+    -> Backpressure: Happens when the response can not send the data as fast as it is recieving. eg. When using readable stream the data chunks are read so fast but res.write() cannot send these peices very fast to client.
+      - Solution:  readableSource.pipe(writeableDestination) [readable.pipe(res)] 
+
+  (38). How Requiring Node Modules really work
+    -> Each JS is treated as seprate module.
+    -> Node.js uses CommJS Module System (require(), exports OR module.exports).
+    -> ECMA Script/ES Module System is in browsers (import, export).
+    -> There have been attempts to bring ES modules to node.js(.mjs).
+    -> require() BTS: When we require a module this happens:
+      - Resolving Path & Loading File:
+        . We can load three types of modules (core, developer modules, 3rd party modules - from npm).
+        . When the require function recieves the module name, it resolves path to the module like this:
+          . Start with core modules.
+          . If it begins with "./" OR "../" try to load developer module.
+          . If there is no developer module found with that name, try to find folder with index.js in it (we can drop ".js" when requiring).
+          . If module is neither core nor developer module, Node will go to node_modules/ and try to find module there.
+          . If module is not found, then the error is thrown and app is stopped.
+        ▽
+      - Wrapping:
+        . After the module is loaded, the modules code is wrapped into a special function which gives us access to special objects.
+          (function(exports, require, module, __filename, __dirname){
+          // module code lives here...
+          });
+          . require: function to require modules.
+          . module: refrence to current modules.
+          . exports: refrence to module.exports, used to export object from a module.
+          . __filename: absolute path to current module's file.
+          . __dirname: directory name of current module.
+        . Node's run time takes the code of our module and puts it inside IIFE, so this way we get access to (exports, require, module, __filename, __dirname), they act as global variables in the each module.
+        . Wrapping each module in IIFE keeps top-level variables private to its module only.
+        ▽
+      - Execution:
+        . The code in the module's wrapper function gets executed by Node.js runtime. 
+        ▽
+      - Returning Exports:
+        . require() function returns the exports of the required module.
+        . module.exports is the returned object.
+        . Use "module.exports" to export single variable eg. one class or one funtion (module.exports = Calculator).
+        . Use "exports" to export multiple named objects   
+          exports.add = (a,b)=>a+b
+          exports.multiply = (a,b)=>a*b
+        ▽ 
+      - Caching:
+        . The modules are cached after the first time they are loaded.
+        . The code in the modules is executed only in first call.
+
+  (39). Requiring Node Modules in practice.
+    -> See (2-how-node-works/modules.js)
+      - console.log(arguments): arguments is an array which contains all the values that were passed into a funtion
+      - console.log(require("module").wrapper): Displays wrapper function and its arguments.
+  
+## Section 05
+  (41-43). Promises
+    -> See (3-asynchronous-JS/index.js)
+    -> A promise implementes the concept of a future value (A value which we are expecting to recieve in some time in future).
+    -> In the beginning the Promise is "Pending", when it successfully gets the data its called "Resolved" Promise, a resolved Promise can either be "Fulfilled (having the requested result)" OR "Rejected (when there is an error)". Calling reslove() means that the Promise as successful. The variable passed in reslove(), will be available as argument in then() method.
+    -> For functions coming from internal Node packages (eg. readFile, etc..), we have to build the Promise by ourselves.
+    -> We can chain then() methods, each then() should return a promise to do this. For all the then() chains we only need one catch() at the end.
+    -> How to build Promises
+      -  new Promise(executor-function)
+      -  executor-function: Gets called immediately when new promise is created. Its the place where we do all the Asynchronous work. Takes two functions as arguments (resolve, reject). 
+    -> How to consume Promises
+      -  then() & catch() methods, using async-await
+    
+  (44). Consuming Promises with async/await
+    -> See (3-asynchronous-JS/index.js)
+    -> Instead of consuming Promise with a then(), we can use async/await (introduced in ES8).
+    -> We use await in front of Promise and it will wait untill the result from promise comes back.
+      - async: write with the function having async code.
+      - await: will stop the code from running untill the promise is resolved. If the Promise is fulfilled then the value of "await expression" is the resloved value of the Promise.
+    -> To handle errors we use try-catch.
+    
+  (45). Returning values from async functions
+    -> See (3-asynchronous-JS/index.js)
+    -> How async function works:
+      - The async function actually runs in the background.
+      - JS Engine will offload the async function to the background and goes to next lines to execute.
+    -> Returning value from async function:
+      - async function returns a promise automatically [promise {<pending>}].
+      - To get the result use then() with async function when calling it. We need to throw Error from callee function and catch them to handle errors.
+      - throw(err): Will mark the whole promise of the function as Rejected.
+      - Another method: Wrap the function call in an async IIFE and put await in front of function call. Also wrap this call inside try-catch to handle errors.
+    
+  (45). Waiting for multiple Promises
+    -> See (3-asynchronous-JS/index.js)
+    -> Do not await the promises but instead save the promises into variables
+    -> const results = await Promise.all([promise1,promise2]);
+      - results: This variable will be an array containing the results of the resloved promises.
+  
+## Section 06
+  (48). What is Express
+    -> Express is minimal Node.js framework. It a higher level abstraction.
+    -> Contains features like complex routing, easier handeling of requests and responses, middleware, server-side rendering etc.
+  
+  (50). Setting up express 
+    -> const express = require("express");
+    -> const app = express();
+    ...
+    middlewares/routes
+    ...
+    -> app.listen(PORT,()=>{
+      //will be called as soon as server starts listening.
+    });
+    -> res.send(): sends string
+    -> res.json(): sends object
+  
+  (51). API and RESTful API Design
+    -> API on higher level: A peice of software that can be used by another peice of software, to allow applications to talk to each other.
+    -> Web APIs: An app that sends data to the client whenever request comes in. The app running on the server and the client are two peices of softwares that are takling to each other.
+    -> REST Architecture: Representational States Transfer, is a way of building web APIs in a logical way that are easy to consume. To make RESTful APIs follow these principles:
+      - Separate API into logical resources (names): The key abstraction of information in REST is resource.
+        . Resource: Object or representation of something, which has data associated to it. Any information that can be named can be a resource (tours, users, reviews).
+      - Expose structured, resource-based URLs: We need to expose (make available) the data using structured URLs that the client can send request to.
+        . Example: (http://www.natours.com/addNewTour) --> "/newTours" is an API endpoint, API will have many endpoints, each of which will send back data to the client.
+      - Use HTTP methods:
+        . /addNewTour --> (POST, /tours), POST is create operation.
+        . /getTour --> (GET, /tours OR /tours/7), GET is read operation.
+        . /updateTour --> (PUT or PATCH, /tours/7), PUT or PATCH are update operations. with PUT client is supposed to send entire object to update, with PATCH it is supposed to send only the part of object that is changed.
+        . /deleteTour --> (DELETE, /tours/7).
+        . /getToursByUser --> (GET, /users/3/tours).
+        . /deleteToursByUser --> (DELETE, /users/3/tours/9).
+      - Send data as JSON (usually):
+        . JSON is very lightweight data interchange format highly used by web APIs. Looks like a basic JS object. All the keys have to be strings.
+        . Jsend (Enveloping): A new object containig a "status" message and "data" object that contains data from DB.
+      - Be stateless:
+        . stateless RESTful API: All state is handled on the client. This means that each request must contain all the information necessary to process a certain request. The server should not have to rememebr previous requests. 
+        . State: A piece of data in the application that might change over time.
+  
+## PROJECT (Section 06)
+  (52-57). Handeling Requests
+    -> Middleware: Its a function that can modify incoming request data. Its just a step that the request goes through while its being processed.
+    -> app.use(express.json()): express.json() is a middleware. Using this middleware the data in the body (came from client in post request) is added to the req object.
+    -> URL Parameters: /tours/[5]
+      - app.get("/tours/:id/:optional?",...)
+      - const {id} = req.params
+    -> app.route("/api/v1/tours").get(getAllTours).post(createTour) and so on
+
+  (58). Middleware and Request Response Cycle
+    -> When someone hits the server Express app recieves a request. It will then create a "req" and "res" object. This data can be proccesed. To process the data Express uses Middleware, which can manipulate "req" and "res" objects and execute any other code.
+    -> Middleware: Its executed in the middle of recieving the request and sending the response. In Express everything is middleware, even route definitions.
+    -> EXAMPLES: 
+      - body parser: express.json()
+      - for logging
+      - for setting http header
+      - router
+    -> Middleware Stack: All the middlewares that we use in our app. Middlewares execute in a order in wich they are written in code.
+    -> The req and res object will go through each middleware. At the end of each function a next() function is called. When we call it the next middleware will be executed with the same req and res objects untill we reach the last one. The last middleware is usually a route handler in which we don't call next(), instead we send the data back to the client.
+
+  (59). Creating our own Middleware 
+    -> app.use(): To use middleware. We pass a function to it which will be added to middleware stack.
+    -> After creating our own funtion we can pass it to app.use() to add it to the middleware stack.
+    -> Inside that function we will have access to "req", "res" objects and "next()" function
+
+  (62). Creating and mounting multiple routes
+    -> const router = express.Router()
+    -> To mount it: Use it as middleware eg. app.use("/api/v1/tours", tourRouter)
+
+  (64). Param middleware
+    -> A middleware that only runs for certain Parameters.
+    -> Its only defined inside Routers (route.param not app.param).
+      router.param('id', (req, res, next, val) => {
+        console.log('Tour ID IS: ', val);
+        next();
+      });
+
+  (65). Chaining multiple middleware functions
+    -> Its only defined inside Routers (route.param not app.param).
+      router.post(checkBody,createTour);
+
+  (66). Serving static file to the server
+    -> Static Files: These are files that sitting in our file system that we currently cannot access using all routes.
+    -> We need to use builtin express middleware to server static files, 
+      app.use(express.static(`${__dirname}/public`))
+                                      ▽
+      (Path to the folder where static files are located).
+    -> To access: baseURL/filename.html
+
+  (67). Environment variables
+    -> Development and Production Environments.
+    -> By default express sets the environment to "development". To see --> console.log(app.get('env')). The 'env' is set by express.
+    -> Node.js also sets many environment variables. To see --> console.log(process.env). These variables are coming from Express core module (process). No need to require it. Its available globally.
+    -> NODE_ENV: defines dev or prod environment. Not defined by default, we have to set it up.
+    -> How to set environment variables:
+      - Using terminal.
+      - Using .env file.
+    -> Connecting the file to read variables from there:
+      - Using dotenv package and require it inside server.js
+       dotenv.config()
+
+## Section 07
+  (70). What is Mongodb
+    -> Its a NOSQL database.
+    -> Ecah DB can have:
+      - Multiple Collections <--> Tables
+    -> Ecah Collection can have:
+      - Multiple Documents <--> Rows
+    -> Key features:
+      - Document Based: field-value pair data structurs, NoSQL.
+      - Scalable.
+      - Flexible: No Document data schema required, each Document can have different number and type of fields.
+      - Performant: Embedded data models, indexing, sharding, flexible documents,, naataive duplication, etc.
+    -> Embedding/Denormalizing: Includinng related data into single document (Not the best Solution).
+
+## Section 08
+  (82). Connecting our DB with Express
+    -> Add connection string from Atlas (Connect --> Drivers --> Select Node and copy connection string)
+    -> require mongoose in server.js and mongoose.connect()
+  
+  (83). What is Mongoose
+    -> Mongoose is an Object Data Modeling (ODM) library for Mongodb and Node.js, provides higher level of abstraction.
+    -> Mongoose Schema: where we model our data, by describing the structure of data, default values and validation.
+    -> Mongoose Model: a wrapper for the schema, provides an Interface for CRUD operations.
+  
+  (84). Creating a Model
+    -> Schema
+      const tourSchema = new mongoose.Schema({
+        name: {
+          // Schema options
+          type: String,
+          required: true,
+          unique: true,
+        },
+        rating: {
+          type: Number,
+          default: 4.5,
+        },
+        price: {
+          type: Number,
+          required: [true, 'Error Message'],
+        },
+      });
+    -> Model
+      const Tour = mongoose.model('Tour', tourSchema);
+
+    
