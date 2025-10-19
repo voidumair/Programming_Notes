@@ -6,7 +6,7 @@
 
 		2. var const let
 
-		3. Hoisting
+		3. Hoisting (for var only)
 		variables and functions are hoisted which means their declaration is moved on the top of code
 		Example:
 		console.log(a); // will print undefined cz (declaration:var a;) is moved to top but not value
@@ -15,7 +15,7 @@
 			 -> not-defined : Existence hi nahi hai
 
 		4. Types in JS
-			 Primitive : aisi value jisko copy krne pr real copy ho jaye
+			 Primitive : aisi value jisko copy krne pr real value copy ho jaye
 			 Refrence : aisi value jisko copy krne pr real copy ni hota blke us main value ka refrence pass ho jata hai
 		primitives = number,string,null,undefined,boolean
 		refrence = [] () {}
@@ -31,7 +31,7 @@
 
 		5. Conditionals (if, else if , else)
 
-		 6. Loops (for,while)
+		6. Loops (for,while)
 
 		7. Functions
 			 Parameters(params) : dummy arguments used in function defination
@@ -79,7 +79,7 @@
 			 let and const do not add themselves to the window object
 
 		2. window object
-		JS kuch features ese hain jo JS ka part ni hain blke JS window se wo feature use kr leti hai
+		JS k kuch features ese hain jo JS ka part ni hain blke JS window se wo feature use kr leti hai
 		window object is a box of features given by browser to use with JS
 
 		3. Browser context api
@@ -267,12 +267,12 @@
 		6. Prototype
 		 javascript adds a property called  [[prototype]] to every object, every object contains prototype.
 		Prototype contains :
-		[[prototype]] contains many helper properties and methods which we can use to complete our tasks
+		[[prototype]] contains many helper properties and methods which we can use to complete our tasks..
 		using .lenght for array is example of using property of prototype in array
 
 
 		7. Prototypal Inheritence
-		Inheritenc is passing parent's features or properties to their childrens.
+		Inheritence is passing parent's features or properties to their childrens.
 		to do the same in JS with the help of prototype(one extra property always given by JS to every object) is PI.
 
 		var human = {
@@ -308,7 +308,7 @@
 			}
 			abcd();
 		   
-		 in a method scop --> this points to parent object
+		 in a method scope --> this points to parent object
 			var obj = {
 				name : "umair",
 				display:function(){
@@ -412,7 +412,7 @@
 			9. Pure and impure functions
 			pure funtion is any funtion which:
 				 1. It should always return same output for same input
-				 2. it always never change/update the value of a global function
+				 2. it never change/update the value of a global function
 
 ------------ DAY04 ----------
 	Async JS
@@ -589,5 +589,3 @@
 		let obj = {name:"umair",age:20};
 		let{age} = obj;
 		age = 20
-
-

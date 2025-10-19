@@ -124,8 +124,6 @@ npx create-next-app@latest
     -> Add optional Middleware in /src/middleware.js
         export { auth as middleware } from "@/auth"
     -> Setup Authentication Methods (OAuth, Magic Links, WebAuthn)
-
-
       
 000. Blog App Project
     -> connect to database (src/database)

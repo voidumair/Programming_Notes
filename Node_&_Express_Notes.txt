@@ -1,7 +1,7 @@
 <------ NODE & EXPRESS ------>
 ------ Learn What Matters ------
 	1. Express or Node what is the main lead
-			-> both are main roles but express cannot be run without Node.
+			-> both are main roles but express cannot run without Node.
 			-> Node needs express to handle requests and responses and routes.
 
 	2. What is express
@@ -70,18 +70,18 @@
 			-> Install mongoose
 			-> import and setup connection
 			-> make schema
-			-> create model and export (practiced in users.js in views folder)
+			-> create model and export (practiced in users.js in routes folder)
 
 	2. Cookies and Sessions
 		<Client (user's browser)>        ---         <Server>
-			Cookies                                 Session
+			Cookies                                 		Session
 			-> both are used to save user's data
 			-> Cookie : 
 					Saves data on clients browser (cookie-parser) (handled using req and res (res to send data to user's browser. req to recieve data from user ) )
 			-> Session : 
 					Saves data on server (express-session) (handled using req cz user ki traf se anay wala data req mai hota hai)
 			-> if server restarts session deletes.
-			-> session value set in one route can accesed in any route (practiced in app.js)
+			-> session value set in one route can be accesed in any route (practiced in app.js)
 
 ------ The End Game ------
 	1. Flash Messages
@@ -96,9 +96,7 @@
 		-> case insenstive search
 			-> RegExp("name","flags") [^start $end]
 		-> find data in which array contains all of a set of values
-			-> {FeildData:{$all:[1,3]}}
-		-> find data in which array contains all of a set of values
-			-> {FeildData:{$all:[1,3]}}
+			-> {FieldData:{$all:[1,3]}}
 		-> Search between date range
 			-> {"dateCreated":{$gte:date2,$lte:date1}}
 		-> Search if field exists
@@ -113,4 +111,3 @@
 				-> write app.js code first (write it after view engine and before logger)
 				-> setup users.js properly
 				-> in index.js try register first and then other codes as well
-			

@@ -3,7 +3,7 @@ what: -JS library to maintain frontend(MVC)
         by default Browser webpage mai kuch change hone pr poora DOM tree refresh krta hai
         REACT directly DOM tree update ni hone deti
         it has its own Virtual DOM jo k exact copy hai DOM ki but has one difference
-        virtual DOM main koi b element change hoga tu sirf uss element ko change kiya jaye na k pooray DOM ko 	refresh kiya jaye ga
+        virtual DOM main koi b element change hoga tu sirf uss element ko change kiya jaye na k pooray DOM ko refresh kiya jaye ga
 
 why:
             very less page reloads
@@ -16,9 +16,8 @@ how to use:
             link the data
             and change data whenever you want REACT will react.
 when: 
-            baray level pr app create krna ho jis reusable structure aur bohat sari cheeze ho rahi ho
+            baray level pr app create krna ho jis mai reusable structure aur bohat sari cheeze ho rahi ho
             
-
 
 Things to rememeber
         Component : aik FUNCTION hai jo JSX return krta hai
@@ -70,7 +69,7 @@ Things to rememeber
     -> state is local and private to the component
     -> State changes cause the component and child components to rerender
     -> useState : returns array of 2 elements (1st elem: holds intial/current value...2nd elem: funtion to change the value)
-    -> Parent Components can pass states down to children via  props
+    -> Parent Components can pass states down to children via props
     -> Lifting State Up: share state between components by moving it to their clossest common Parent(Ancestor)
 
 27: State vs Prop
@@ -125,7 +124,7 @@ Things to rememeber
             2 use cases:
                 1. whenever one state changes in component whole component re-renders and resets.
                     useRef will prisist its value even after render.
-                1. to refer html tags (selecting like in DOM)
+                2. to refer html tags (selecting like in DOM)
 
                 NOTE:
                 -> When you change the ref.current property, React does not re-render your component.
@@ -143,16 +142,16 @@ Things to rememeber
             -> initialization: use React.createContext and export it with initial values.
             -> Provider: implement contextName.Provider in components
             -> Access Value: use the useContext hook
-            -> Dynamic Data: combine context usle with state
+            -> Dynamic Data: combine context use with state
             -> Export Functions: context can also export functions
 
 36: useReducer() HOOK
     -> 2 main components
             REDUCER: A PURE FUNCTION that takes (currentState,action) and returns new state
-            ACTION: An OBJECT describing what happend
+            action: An OBJECT describing what happend
     -> others
             INITIALIZATION: invoked as
-                    const[state,dispatc]=useReducer(reducer,intialState)
+                    const[state,dispatch]=useReducer(reducer,intialState)
             DISPATCH: actions are dispatched using dispatch function. which invokes
                     reducer with current state and given action
 
@@ -167,11 +166,11 @@ Things to rememeber
 39-40: useEffcet() HOOK
     -> useEffect() handles side effects like Data Fetching and Events Handeling.
     -> useEffect() runs autometically after every render by default.
-    -> by providing Dependency Array, useEffcet() will  only run when specific variables change. Empty Array means useEffcet runs only once.
+    -> by providing Dependency Array, useEffcet() will only run when specific variables change. Empty Array means useEffcet runs only once.
     -> Multiple useEffcet() hooks can be used in single component.
     -> useEffcet() Hook cleanup: returning a function from useEffcet() allows for cleanup, ideal for removing event listners.
     -> (CWH)
-              -> useEffect: this is the function that runs when purticular state aur prop is changed
+              -> useEffect: this is the function that runs when purticular state or prop is changed
                 HOW REACT WORKS:
                 react renders components every time any state changes in component. if parent component contains some other child component and data in parent component is changed then it renders all data in parent component and first renders data in deepest child components. 
                 so useEffect function runs accrodigly (from deepest child towards parent)
@@ -234,21 +233,21 @@ Things to rememeber
         -> redirect() response can be returned for navigation after submittion.
 
 52-58: REDUX
-    -> Local State (states inside component (useState,useReducer))
-    -> Cross Component (sharing states within parent and child component (useState with prop drilling))
-    -> App Wide (states available for whole app(useState,context api,REDUX))
+    -> Local State: (states inside component (useState,useReducer))
+    -> Cross Component: (sharing states within parent and child component (useState with prop drilling))
+    -> App Wide: (states available for whole app(useState,context api,REDUX))
 
     -> What is REDUX:
         -> State management for cross component or app-wide state
     
     -> Context API vs REDUX:
         -> Context : slow proformance, repaints over small state changes
-        -> Context : achaa hai, achaa hai.
+        -> Redux : achaa hai, achaa hai.
     
     -> How REDUX works:
-        -> Single Sourrce: uses a single central store to maintain entire application states.
+        -> Single Source: uses a single central store to maintain entire application states.
         -> Actions: Components never directly change the store. chnages to the states are made throuugh dispatched actions
-        -> Reducer: a pure function that returns the new state.Actions are processed by reducers
+        -> Reducer: a pure function that returns the new state. Actions are processed by reducers
         -> Immutable States: every state is immutable. every change results in a new state object.
         -> Different from useReducer HOOK
     
@@ -363,4 +362,3 @@ Things to rememeber
         import { useAuthStore } from "../store/authStore";
 
         const { signup, error, isLoading } = useAuthStore();
-            

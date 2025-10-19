@@ -1,0 +1,4 @@
+1. Box Model
+  -> Everything is a box (div).
+  -> These boxes behave like a text document, things start from the top left and wrap when they hit the end.
+  -> All boxes are contrallabe.
